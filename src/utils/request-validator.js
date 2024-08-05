@@ -28,6 +28,37 @@ function validateGuestInfo(guestInfo){
     return error;
 }
 
+function validateUser(user){
+    const error = {};
+
+    if(!user.username){
+        error.username = "Username cannot be empty";
+    }
+    if(!user.email){
+        error.password = "Password cannot be empty";
+    }
+    if(!user.email || !isEmail(user.email)){
+        error.email = "Email is invalid";
+    }
+
+    return error;
+}
+
+function validateUserAuthenticate(userAuth){
+    const error = {};
+
+    if(!userAuth.username){
+        error.username = "Username cannot be empty";
+    }
+    if(!userAuth.email){
+        error.password = "Password cannot be empty";
+    }
+
+    return error;
+}
+
 module.exports = {
-    validateGuestInfo
+    validateGuestInfo,
+    validateUser,
+    validateUserAuthenticate
 }

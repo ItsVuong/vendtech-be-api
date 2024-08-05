@@ -4,6 +4,7 @@ const uploadService = require('../services/image-upload.service');
 const productService = require('../services/product.service');
 const categoryService = require('../services/category.service');
 const { default: mongoose } = require('mongoose');
+const { HttpException } = require('../exceptions/exception');
 
 //intialize a firebase application
 initializeApp(config.firebaseConfig);
@@ -11,18 +12,13 @@ initializeApp(config.firebaseConfig);
 async function createProductController(req, res, next){
     try{
         //validate category field
-        const error = new Error();
         if(req.body.category){
             if(!mongoose.isValidObjectId(req.body.category)){
-                error.status = 400;
-                error.message = "invalid category id";
-                throw error;
+                throw new HttpException(400, "Invalid category id")
             }
             const category = await categoryService.getCategoryById(req.body.category);
             if(!category){
-                error.status = 400;
-                error.message = "category not found";
-                throw error;
+                throw new HttpException(400, "Category not found")
             }
         }
         //validate other fields
@@ -132,16 +128,14 @@ async function updateProductById(req, res, next){
     //validate category field
     const error = new Error();
     if(req.body.category){
-        if(!mongoose.isValidObjectId(req.body.category)){
-            error.status = 400;
-            error.message = "invalid category id";
-            throw error;
-        }
-        const category = await categoryService.getCategoryById(req.body.category);
-        if(!category){
-            error.status = 400;
-            error.message = "category not found";
-            throw error;
+        if(req.body.category){
+            if(!mongoose.isValidObjectId(req.body.category)){
+                throw new HttpException(400, "Invalid category id")
+            }
+            const category = await categoryService.getCategoryById(req.body.category);
+            if(!category){
+                throw new HttpException(400, "Category not found")
+            }
         }
         productObject.category = req.body.category;
     }
