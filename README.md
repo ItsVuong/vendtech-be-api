@@ -60,7 +60,7 @@
         - body: { fileName: file, name: string, description: string, category: string }
 
 ### Guest information
-        - Get 
+    - Get 
         - Path: /api/guestInfo
         - Method: GET
         - headers: { authorization: ACCESS_TOKEN }
