@@ -9,7 +9,7 @@
 - optional: include _.env_ in your _.gitignore_
 
 ## Routes
-[a relative link](./vendtech.postman_collection.json)
+[Postman file](./vendtech.postman_collection.json)
 ### Category
     - Get category
         - Method: GET
