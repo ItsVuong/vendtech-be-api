@@ -3,6 +3,7 @@ const dotenv = require("dotenv")
 const mongoose = require("mongoose")
 const router = require("./routes/routes")
 const errorMiddleware = require("./middlewares/error.middleware")
+const cors = require("cors");
 //config environment variables
 dotenv.config();
 const PORT = process.env.PORT;
@@ -10,6 +11,7 @@ const PORT = process.env.PORT;
 const app = express();
 
 app.use(express.json());
+app.use(cors())
 app.use(router);
 app.use(errorMiddleware);
 

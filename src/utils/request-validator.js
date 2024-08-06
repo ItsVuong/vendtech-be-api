@@ -50,7 +50,7 @@ function validateUserAuthenticate(userAuth){
     if(!userAuth.username){
         error.username = "Username cannot be empty";
     }
-    if(!userAuth.email){
+    if(!userAuth.password){
         error.password = "Password cannot be empty";
     }
 
