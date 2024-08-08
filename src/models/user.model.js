@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
-const ProductSchema = mongoose.Schema(
+const UserSchema = mongoose.Schema(
     {
         username: {
             type: String,
@@ -24,6 +25,25 @@ const ProductSchema = mongoose.Schema(
     }
 );
 
-const ProductModel = mongoose.model("User", ProductSchema);
+UserSchema.pre("save", async function (next){
+    console.log("middlware: ", this)
+    if(!this.isModified("password")){
+        return next();
+    }
+    const hash = await bcrypt.hash(this.password, 10);
+    this.password = hash;
+    next();
+});
 
-module.exports = ProductModel;
+UserSchema.pre("findOneAndUpdate", async function (next){
+    if(!this._update.password){
+        return next();
+    }
+    const hash = await bcrypt.hash(this._update.password, 10);
+    this._update.password = hash;
+    next();
+});
+
+const UserModel = mongoose.model("User", UserSchema);
+
+module.exports = UserModel;

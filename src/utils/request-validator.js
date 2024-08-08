@@ -34,7 +34,7 @@ function validateUser(user){
     if(!user.username){
         error.username = "Username cannot be empty";
     }
-    if(!user.email){
+    if(!user.password){
         error.password = "Password cannot be empty";
     }
     if(!user.email || !isEmail(user.email)){
