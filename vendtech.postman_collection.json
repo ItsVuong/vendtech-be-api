@@ -133,8 +133,59 @@
 				{
 					"name": "create product",
 					"request": {
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								},
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "secret",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "payload",
+									"value": "{}",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpZCI6IjY2YjExZDZhMzdlOWQxNzIxNmQ2NDQ4NyIsImlhdCI6MTcyMzAxOTUwNSwiZXhwIjoxNzIzMDIzMTA1fQ.vBc6IG8055KhMQWIU1hEuWQIqKM46GsGodtVG5WucTI",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "formdata",
 							"formdata": [
@@ -156,8 +207,7 @@
 								{
 									"key": "category",
 									"value": "66b0497bb5e97c51d435dd93",
-									"type": "text",
-									"disabled": true
+									"type": "text"
 								}
 							]
 						},
@@ -322,7 +372,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"firstName\": \"Wade\",\r\n    \"lastName\": \"Wilson\",\r\n    \"email\": \"deadpool@disney.com\",\r\n    \"message\": \" 123   123     NOt a message  123  \"\r\n}",
+							"raw": "{\r\n    \"firstName\": \"Wade\",\r\n    \"lastName\": \"Wilson\",\r\n    \"email\": \"deadpool@disney.com\",\r\n    \"phoneNumber\": \"123\",\r\n    \"message\": \" 123   123     NOt a message  123  \"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -404,7 +454,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"admin\",\r\n    \"email\": \"admin@gmail.com\"\r\n}",
+							"raw": "{\r\n    \"username\": \"admin30s11\",\r\n    \"password\": \"admin\",\r\n    \"email\": \"itsvuong080691d11@gmail.com\",\r\n    \"random field\": \"Well hello there\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -432,7 +482,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"admin\"\r\n}",
+							"raw": "{\r\n    \"username\": \"admin2\",\r\n    \"password\": \"TheAlmightyAdmin\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -449,6 +499,145 @@
 								"api",
 								"user",
 								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3001/api/user/?pageSize=1&currentPage=0",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"user",
+								""
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "1"
+								},
+								{
+									"key": "currentPage",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user by username",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3001/api/user/admin1",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"user",
+								"admin1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "1010a36af463519988f813974dd0b335e85965550bf061ae59a6b8065c89a8a1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"newPassword\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3001/api/user/update",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"user",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "reset password",
+			"item": [
+				{
+					"name": "get password reset token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3001/api/reset-password/itsvuong0806@gmail.com",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"reset-password",
+								"itsvuong0806@gmail.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": \"66b3ab9804a4ea4e7a569f86\",\r\n    \"token\": \"e5eaa03b5e43891dfba537c53939864a81564dc063ba2eef8938c9d2f0f04b18\",\r\n    \"password\": \"TheAlmightyAdmin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3001/api/reset-password/",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"reset-password",
+								""
 							]
 						}
 					},
