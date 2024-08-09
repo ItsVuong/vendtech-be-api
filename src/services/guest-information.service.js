@@ -21,7 +21,10 @@ async function getGuestInfo(pageSize, currentPage){
     const infos = GuestInfo.find({}, null, 
         { limit: pageSize, skip: (currentPage - 1) * pageSize });
 
-    return infos;
+    return {
+        data: infos,
+        total: count
+    };
 }
 
 async function deleteGuestInfoById(id){

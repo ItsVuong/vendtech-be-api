@@ -24,7 +24,10 @@ async function getProducts(pageSize, currentPage){
     const products = Product.find({}, null, 
         { limit: pageSize, skip: (currentPage - 1) * pageSize });
 
-    return products;
+    return {
+        data: products,
+        total: count
+    };
 }
 
 async function getProductById(id){

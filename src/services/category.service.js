@@ -19,7 +19,10 @@ async function getCategories(pageSize, currentPage){
     const categories = Category.find({}, null, 
         { limit: pageSize, skip: (currentPage - 1) * pageSize });
 
-    return categories;
+    return {
+        data: products,
+        total: count
+    };
 }
 
 async function updateCategory(id, data){
