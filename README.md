@@ -6,7 +6,6 @@
 - `cd vendtech-be-api`
 - `npm install`
 - `npm start`
-- optional: include _.env_ in your _.gitignore_
 
 ## Routes
 [Postman file](./vendtech.postman_collection.json)
@@ -79,12 +78,39 @@
         - headers: { authorization: ACCESS_TOKEN }
 
 ### User
+    - Get user by username
+        - Path: /api/user/:username
+        - Method: GET
+        - headers: { authorization }
+
+    - Get user all users
+        - Path: /api/user/
+        - Method: GET
+        - Params: { pageSize, currentPage }
+        - headers: { authorization }
+
     - Create user
         - Path: /api/user
         - Method: POST
         - body: { username, password, email }
 
+    - Update user
+        - Path: /api/user/update
+        - Method: POST
+        - headers: { authorization }
+        - body: { confirmPassword (old password), newPassword (optional), newUsername (optional) }
+
     - Authenticate user
         - Path: /api/user/authenticate
         - Method: POST
         - body: { username, password }
+
+### Reset password
+    - Get reset token
+        - Path: reset-password/:email
+        - Method: GET
+
+    - Reset password
+        - Path: reset-password/
+        - Method: POST
+        - body: { userId, token, password }

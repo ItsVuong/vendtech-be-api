@@ -10,7 +10,24 @@ async function getUserByEmail(email){
 }
 
 async function getByUsername(username){
-    return User.findOne({ username: username });
+    const user = await User.findOne({ username: username });
+    return user;
+}
+
+async function getAllUsers(pageSize, currentPage){
+    const count = await User.countDocuments({});
+    const divide = Number(count/pageSize);
+    const pages = Math.round(divide);
+
+    if(currentPage >= pages){currentPage = pages}
+    if(currentPage <= 0){currentPage = 1}
+    const users = await User.find({}, null, 
+        { limit: pageSize, skip: (currentPage - 1) * pageSize });
+
+    return {
+        data: users,
+        total: count
+    };
 }
 
 async function createUser(data){
@@ -51,9 +68,26 @@ async function authenticateUser(data){
     return {...user.toJSON(), accessToken}
 }
 
-async function updateUser(username, updateData){
-    const user = await User.findOneAndUpdate({username: username}, updateData);
-    return user;
+async function updateUser(id, updateData){
+    const user = await User.findOne({_id: id});
+    const {confirmPassword, newPassword, newUsername} = updateData;
+    const isPasswordValid = await bcrypt.compare(confirmPassword, user.password); 
+
+    if(!isPasswordValid){
+        throw new HttpException(400, "Old password does not match.");
+    }
+    if(newUsername && await getByUsername(newUsername)){
+        throw new HttpException(400, "Username already exists.");
+    }
+
+    const update = {};
+    if(newPassword) update.password = newPassword;
+    if(newUsername) update.username = newUsername;
+    const updateUser = await User.findOneAndUpdate(
+        {_id: id}, 
+        update, 
+        {returnDocument: "after"});
+    return updateUser;
 }
 
 async function generatePasswordToken(userId) {
@@ -92,5 +126,7 @@ module.exports = {
     getByUsername,
     getUserByEmail,
     generatePasswordToken,
-    resetPassword
+    resetPassword,
+    updateUser,
+    getAllUsers
 }

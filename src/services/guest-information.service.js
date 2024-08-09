@@ -18,7 +18,7 @@ async function getGuestInfo(pageSize, currentPage){
 
     if(currentPage >= pages){currentPage = pages}
     if(currentPage <= 0){currentPage = 1}
-    const infos = GuestInfo.find({}, null, 
+    const infos = await GuestInfo.find({}, null, 
         { limit: pageSize, skip: (currentPage - 1) * pageSize });
 
     return {

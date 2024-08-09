@@ -20,7 +20,7 @@ async function getCategories(pageSize, currentPage){
         { limit: pageSize, skip: (currentPage - 1) * pageSize });
 
     return {
-        data: products,
+        data: categories,
         total: count
     };
 }

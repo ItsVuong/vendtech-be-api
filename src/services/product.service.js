@@ -21,7 +21,7 @@ async function getProducts(pageSize, currentPage){
 
     if(currentPage >= pages){currentPage = pages}
     if(currentPage <= 0){currentPage = 1}
-    const products = Product.find({}, null, 
+    const products = await Product.find({}, null, 
         { limit: pageSize, skip: (currentPage - 1) * pageSize });
 
     return {

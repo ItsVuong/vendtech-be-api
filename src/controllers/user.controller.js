@@ -2,6 +2,7 @@ const { HttpException } = require("../exceptions/exception");
 const { validateUser, validateUserAuthenticate } = require("../utils/request-validator");
 const userService = require('../services/user.service');
 const sendEmail = require('../utils/email-sender')
+const jwt = require("jsonwebtoken");
 
 async function createUser(req, res, next){
     try {
@@ -16,6 +17,21 @@ async function createUser(req, res, next){
     } catch (error) {
         console.log(error);
         next(error);
+    }
+}
+
+async function getUsers(req, res, next){
+    try {
+        const regex = /^\d+$/
+        if(!req.query.pageSize || !regex.test(req.query.pageSize)){
+            throw new HttpException(400, "Invalid page size");
+        }
+
+        const result = await userService.getAllUsers(req.query.pageSize, req.query.currentPage);
+        return res.status(200).send(result)
+    } catch (error) {
+       console.log(error);
+       next(error); 
     }
 }
 
@@ -37,15 +53,16 @@ async function authenticateUser(req, res, next){
 
 async function getUserByUsername(req, res, next) {
     try {
-        const username = params.username;
+        const username = req.params.username;
         if (!username){
-            throw HttpException(400, "Username cannot be empty.");
+            throw new HttpException(400, "Username cannot be empty.");
         }
-        const user = userService.getByUsername(username);
+        const user = await userService.getByUsername(username);
         if (!user){
-            throw HttpException(400, "User not found.");
+            throw new HttpException(400, "User not found.");
         }
-        return res.status(200).send(user);
+        const {password, ...response} = user.toJSON()
+        return res.status(200).send(response);
     } catch (error) {
         console.log(error);
         next(error);
@@ -55,15 +72,13 @@ async function getUserByUsername(req, res, next) {
 async function getPasswordResetToken(req, res, next) {
     try {
         const email = req.params.email;
-        console.log(req.params)
         if (!email) {
             throw new HttpException(400, "Email cannot be empty.");
         }
         const user = await userService.getUserByEmail(email);
         if (!user) {
-            throw HttpException(400, "Email does not exist.")
+            throw new HttpException(400, "Email does not exist.")
         }
-        console.log(user)
         const redirectUrl = await userService.generatePasswordToken(user._id);
 
         const data = await sendEmail(email, "Reset password", "<h1>Click here to reset password: </h1><br><a href='" + redirectUrl + "'>"+ redirectUrl +"</a>")
@@ -88,9 +103,31 @@ async function resetPassword(req, res, next){
     }
 }
 
+async function updateUser(req, res, next){
+    try {
+        const {confirmPassword, newUsername, newPassword} = req.body;
+        if(!newUsername?.trim() && !newPassword?.trim()){
+            throw new HttpException(400, "Please provide new username or new password.");
+        }
+        if(!confirmPassword?.trim()){
+            throw new HttpException(400, "Please provive your old password.");
+        }
+        const authorization = jwt.decode(req.headers['authorization']);
+        const {id} = authorization;
+        const result = await userService.updateUser(id, req.body);
+        res.status(201).send(result);
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+}
+
 module.exports = {
     createUser,
     authenticateUser,
     getPasswordResetToken,
-    resetPassword
+    resetPassword,
+    getUserByUsername,
+    updateUser,
+    getUsers
 }

@@ -56,7 +56,7 @@ async function createProductController(req, res, next){
 async function deleteProduct(req, res, next){
     try {
         if(!req.params.id || !mongoose.isValidObjectId(req.params.id)){
-           throw HttpException(400, "Invalid object id")
+           throw new HttpException(400, "Invalid object id")
         }
         const result = await productService.deleteProduct(req.params.id);
         if(result){

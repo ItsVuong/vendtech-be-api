@@ -6,7 +6,6 @@ const guestInfo = require('./guest-information.route');
 const resetPassword = require('./reset-password.route');
 const user = require('./user.route')
 const multer = require('multer');
-const { getPasswordResetToken } = require('../controllers/user.controller');
 
 //middleware for uploading image
 const upload = multer({ storage: multer.memoryStorage() });
