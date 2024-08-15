@@ -1,5 +1,7 @@
 const { default: mongoose } = require("mongoose");
-const categoryService = require("../services/category.service")
+const categoryService = require("../services/category.service");
+const { HttpException } = require("../exceptions/exception");
+const { validateCategoryUpdate } = require("../utils/request-validator");
 
 async function createCategory(req, res, next){
     console.log(req.body)
@@ -17,12 +19,9 @@ async function createCategory(req, res, next){
 
 async function getCategories(req, res, next){
     try {
-        const error = new Error();
         const regex = /^\d+$/
         if(!req.query.pageSize || !regex.test(req.query.pageSize)){
-            error.status=400;
-            error.message="invalid page size."
-            throw error;
+            throw new HttpException(400, "Invalid page size.")
         }
 
         const result = await categoryService.getCategories(req.query.pageSize, req.query.currentPage);
@@ -35,27 +34,18 @@ async function getCategories(req, res, next){
 
 async function updateCategory(req, res ,next){
     try{
-        const error = new Error()
+        const id = req.params.id;
+        const category = {name: req.body?.name}
+        
         if(!mongoose.isValidObjectId(req.params.id)){
-            error.status = 400;
-            error.message = "invalid object id."
-            throw error
+            throw new HttpException(400, "Invalid category id.")
         }
-        if(!req.body.name?.trim()){
-            error.status = 400;
-            error.message = "Category name cannot be empty."
-            throw error
+        const error = validateCategoryUpdate(category);
+        if(Object.keys(error).length){
+            throw new HttpException(400, "Bad request.", error);
         }
 
-        const category = { name: req.body.name };
-        const result = await categoryService.updateCategory(req.params.id, category);
-
-        if(!result){
-            error.status = 400;
-            error.message = "object does not exist";
-            throw error;
-        }
-
+        const result = await categoryService.updateCategory(id, category);
         return res.status(201).send(result);
     }catch(error){
         console.log(error);

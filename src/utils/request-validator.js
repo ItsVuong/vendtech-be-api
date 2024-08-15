@@ -57,8 +57,19 @@ function validateUserAuthenticate(userAuth){
     return error;
 }
 
+function validateCategoryUpdate(category){
+    const error = {};
+
+    if(!category.name?.trim()){
+        error.name = "Category name cannot be empty."
+    }
+
+    return error;
+}
+
 module.exports = {
     validateGuestInfo,
     validateUser,
-    validateUserAuthenticate
+    validateUserAuthenticate,
+    validateCategoryUpdate
 }

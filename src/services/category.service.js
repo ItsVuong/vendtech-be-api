@@ -1,3 +1,4 @@
+const { HttpException } = require('../exceptions/exception');
 const Category = require('../models/category.model');
 
 async function createCategory(data){
@@ -16,7 +17,7 @@ async function getCategories(pageSize, currentPage){
 
     if(currentPage >= pages){currentPage = pages}
     if(currentPage <= 0){currentPage = 1}
-    const categories = Category.find({}, null, 
+    const categories = await Category.find({}, null, 
         { limit: pageSize, skip: (currentPage - 1) * pageSize });
 
     return {
@@ -26,8 +27,11 @@ async function getCategories(pageSize, currentPage){
 }
 
 async function updateCategory(id, data){
-    const category = { name: data.name };
-    return Category.findByIdAndUpdate(id, category, {returnDocument: "after"});
+    const result = await Category.findByIdAndUpdate(id, data, {returnDocument: "after"});
+    if(!result){
+        throw new HttpException(400, "Category does not exist.");
+    }
+    return result;
 }
 
 async function deleteCategory(id){
