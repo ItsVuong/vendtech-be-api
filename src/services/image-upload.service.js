@@ -36,7 +36,9 @@ async function uploadImage(file) {
 
 async function deleteImage(imageName){
         const storageRef = ref(storage, 'files/' + imageName);
-        return await deleteObject(storageRef);
+        const result = await deleteObject(storageRef);
+        console.log("/n Delete image result /n" + result);
+        return result;
 }
 
 const giveCurrentDateTime = () => {

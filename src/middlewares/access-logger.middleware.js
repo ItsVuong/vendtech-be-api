@@ -9,5 +9,5 @@ morgan.token('date', function() {
 });
 const accessLogStream = fs.createWriteStream(path.join(dirname, 'access.log'), { flags: 'a' })
 const logger = morgan(':date :remote-addr :method :url :status :res[content-length] - :response-time ms', { stream: accessLogStream });
-console.log(__dirname)
+
 module.exports = logger;

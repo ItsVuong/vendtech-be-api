@@ -62,7 +62,7 @@ async function authenticateUser(data){
         {username: username, email: user.email, id: user._id},
         accessTokenSecret,
         {
-            expiresIn: "1h"
+            expiresIn: "31d"
         }
     );
     return {...user.toJSON(), accessToken}

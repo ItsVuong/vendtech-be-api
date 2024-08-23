@@ -60,9 +60,9 @@ async function deleteProduct(req, res, next){
         }
         const result = await productService.deleteProduct(req.params.id);
         if(result){
-            await uploadService.deleteImage(result.image.name);
+            uploadService.deleteImage(result.image.name);
         }
-        res.status(201).send(result)
+        res.status(201).send(result);
     } catch (error) {
         console.log(error);
         next(error);
