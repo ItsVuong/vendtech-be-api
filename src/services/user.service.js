@@ -51,7 +51,7 @@ async function authenticateUser(data){
     const { username, password } = data;
     const user = await User.findOne({ username: username });
     if(!user){
-        throw new HttpException(400, "User already exists");
+        throw new HttpException(400, "Username does not exist");
     }
     const validatePassword = await bcrypt.compare(password, user.password)
     if(!validatePassword){
@@ -60,10 +60,7 @@ async function authenticateUser(data){
     const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET
     const accessToken = jwt.sign(
         {username: username, email: user.email, id: user._id},
-        accessTokenSecret,
-        {
-            expiresIn: "31d"
-        }
+        accessTokenSecret
     );
     return {...user.toJSON(), accessToken}
 }
