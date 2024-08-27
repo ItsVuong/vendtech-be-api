@@ -13,7 +13,7 @@ async function getCategoryById(id){
 async function getCategories(pageSize, currentPage){
     const count = await Category.countDocuments({});
     const divide = Number(count/pageSize);
-    const pages = Math.round(divide);
+    const pages = Math.ceil(divide);
 
     if(currentPage >= pages){currentPage = pages}
     if(currentPage <= 0){currentPage = 1}

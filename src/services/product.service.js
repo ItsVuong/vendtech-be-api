@@ -17,7 +17,7 @@ async function deleteProduct(id){
 async function getProducts(pageSize, currentPage){
     const count = await Product.countDocuments({});
     const divide = Number(count/pageSize);
-    const pages = Math.round(divide);
+    const pages = Math.ceil(divide);
 
     if(currentPage >= pages){currentPage = pages}
     if(currentPage <= 0){currentPage = 1}
