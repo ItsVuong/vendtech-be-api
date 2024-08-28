@@ -3,6 +3,7 @@ const { validateUser, validateUserAuthenticate } = require("../utils/request-val
 const userService = require('../services/user.service');
 const sendEmail = require('../utils/email-sender')
 const jwt = require("jsonwebtoken");
+const querystring = require("querystring");
 
 async function createUser(req, res, next){
     try {
@@ -80,9 +81,17 @@ async function getPasswordResetToken(req, res, next) {
             throw new HttpException(400, "Email does not exist.")
         }
         const redirectUrl = await userService.generatePasswordToken(user._id);
-
-        const data = await sendEmail(email, "Reset password", "<h1>Click here to reset password: </h1><br><a href='" + redirectUrl + "'>"+ redirectUrl +"</a>")
-        res.status(200).send(redirectUrl);
+        console.log(encodeURIComponent(`href=${redirectUrl}`))
+        const data = await sendEmail(email, "Reset password",
+        `<!DOCTYPE html>
+        <html>
+        <body>
+            <h4>Click here to reset your password: </h4>
+            <a href="http://${encodeURIComponent(redirectUrl)}"> RESET PASSWORD </a>
+        </body>    
+        </html>`
+        )
+        res.status(200).send(data);
     } catch (error) {
        console.log(error);
        next(error); 
