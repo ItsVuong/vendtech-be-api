@@ -12,7 +12,7 @@ async function createProduct (data){
 }
 
 async function deleteProduct(id){
-    const result = Product.findByIdAndDelete(id);
+    const result = await Product.findByIdAndDelete(id);
     if(result){
         uploadService.deleteImage(result.image.name);
     }
