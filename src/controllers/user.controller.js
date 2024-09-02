@@ -81,7 +81,6 @@ async function getPasswordResetToken(req, res, next) {
             throw new HttpException(400, "Email does not exist.")
         }
         const redirectUrl = await userService.generatePasswordToken(user._id);
-        console.log(encodeURIComponent(`href=${redirectUrl}`))
         const data = await sendEmail(email, "Reset password",
         `<!DOCTYPE html>
         <html>

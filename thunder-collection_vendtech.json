@@ -1,0 +1,493 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "vendtech",
+    "collectionId": "45dfde07-e7c0-43ff-adea-caa42fa32b69",
+    "dateExported": "2024-09-01T21:40:46.937Z",
+    "version": "1.2",
+    "folders": [
+        {
+            "_id": "60f75b1b-4ad5-47f4-b780-5fb94c324725",
+            "name": "category",
+            "containerId": "",
+            "created": "2024-08-31T07:19:52.290Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "660a5102-79ea-44a3-89ef-f752b88ad0e2",
+            "name": "product",
+            "containerId": "",
+            "created": "2024-08-31T07:19:52.291Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "eb82161a-4ff1-4eb2-af65-4268b9057115",
+            "name": "guest information",
+            "containerId": "",
+            "created": "2024-08-31T07:19:52.292Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "43d62e11-8280-4224-b815-0ca03a6ca7a1",
+            "name": "user",
+            "containerId": "",
+            "created": "2024-08-31T07:19:52.293Z",
+            "sortNum": 40000
+        },
+        {
+            "_id": "7ec1aaa6-ab82-4b39-a504-f01f76480095",
+            "name": "reset password",
+            "containerId": "",
+            "created": "2024-08-31T07:19:52.294Z",
+            "sortNum": 50000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "d80dbdab-fcd7-4284-9ca0-ff459e178300",
+            "colId": "45dfde07-e7c0-43ff-adea-caa42fa32b69",
+            "containerId": "60f75b1b-4ad5-47f4-b780-5fb94c324725",
+            "name": "delete category",
+            "url": "localhost:3001/api/category/66b052398bdbec8a58c156eb",
+            "method": "DELETE",
+            "sortNum": 10000,
+            "created": "2024-08-31T07:19:52.291Z",
+            "modified": "2024-09-01T19:55:47.886Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMiIsImVtYWlsIjoiaXRzdnVvbmcwODA2QGdtYWlsLmNvbSIsImlkIjoiNjZiM2FiOTgwNGE0ZWE0ZTdhNTY5Zjg2IiwiaWF0IjoxNzI1MjIwNTA5fQ.lXsZ4_y_yEjlErxMDi4M6JMCHujW360LUZh0nzNCNwI"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"name\": \"vending machine 6 pro plus +\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "577d713b-97c8-4971-8405-666e52827566",
+            "colId": "45dfde07-e7c0-43ff-adea-caa42fa32b69",
+            "containerId": "60f75b1b-4ad5-47f4-b780-5fb94c324725",
+            "name": "get categories",
+            "url": "localhost:3001/api/category?pageSize=0&currentPage=0",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-08-31T07:19:52.292Z",
+            "modified": "2024-08-31T09:07:39.940Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "pageSize",
+                    "value": "0",
+                    "isPath": false
+                },
+                {
+                    "name": "currentPage",
+                    "value": "0",
+                    "isPath": false
+                }
+            ]
+        },
+        {
+            "_id": "c72525d7-7e7e-4b79-9d67-4567eccda06a",
+            "colId": "45dfde07-e7c0-43ff-adea-caa42fa32b69",
+            "containerId": "60f75b1b-4ad5-47f4-b780-5fb94c324725",
+            "name": "update category",
+            "url": "localhost:3001/api/category/66b0523d8bdbec8a58c156ed",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-08-31T07:19:52.293Z",
+            "modified": "2024-09-01T21:36:52.873Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMiIsImVtYWlsIjoiaXRzdnVvbmcwODA2QGdtYWlsLmNvbSIsImlkIjoiNjZiM2FiOTgwNGE0ZWE0ZTdhNTY5Zjg2IiwiaWF0IjoxNzI1MjIwNTA5fQ.lXsZ4_y_yEjlErxMDi4M6JMCHujW360LUZh0nzNCNwI"
+                }
+            ],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "test update 123"
+                    },
+                    {
+                        "name": "description",
+                        "value": "this is a description 123"
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "fileName",
+                        "value": "/home/flyingracoon/Downloads/98bed99a3006caf3cf273e9144616a03.jpg",
+                        "isDisabled": true
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "106b4e95-b630-462e-9d02-91a1b5073c39",
+            "colId": "45dfde07-e7c0-43ff-adea-caa42fa32b69",
+            "containerId": "60f75b1b-4ad5-47f4-b780-5fb94c324725",
+            "name": "create category",
+            "url": "localhost:3001/api/category/",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2024-08-31T07:19:52.294Z",
+            "modified": "2024-09-01T20:53:51.444Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMiIsImVtYWlsIjoiaXRzdnVvbmcwODA2QGdtYWlsLmNvbSIsImlkIjoiNjZiM2FiOTgwNGE0ZWE0ZTdhNTY5Zjg2IiwiaWF0IjoxNzI1MDg4ODI1fQ.adxFZTLDzXrOLcN4n3M-_q6EIM3jnDNTDA65V-oifL4"
+                }
+            ],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "Category with image"
+                    },
+                    {
+                        "name": "description",
+                        "value": "Hello there"
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "fileName",
+                        "value": "/home/flyingracoon/Downloads/98bed99a3006caf3cf273e9144616a03.jpg"
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "467cc655-856e-4ea2-ae3e-f5cc688b0279",
+            "colId": "45dfde07-e7c0-43ff-adea-caa42fa32b69",
+            "containerId": "660a5102-79ea-44a3-89ef-f752b88ad0e2",
+            "name": "create product",
+            "url": "localhost:3001/api/product",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2024-08-31T07:19:52.295Z",
+            "modified": "2024-09-01T16:34:09.075Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMiIsImVtYWlsIjoiaXRzdnVvbmcwODA2QGdtYWlsLmNvbSIsImlkIjoiNjZiM2FiOTgwNGE0ZWE0ZTdhNTY5Zjg2IiwiaWF0IjoxNzI1MDg4ODI1fQ.adxFZTLDzXrOLcN4n3M-_q6EIM3jnDNTDA65V-oifL4"
+                }
+            ],
+            "params": [
+                {
+                    "name": "filename",
+                    "value": "",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "    123"
+                    },
+                    {
+                        "name": "description",
+                        "value": "it's a vending machine"
+                    },
+                    {
+                        "name": "category",
+                        "value": "66b052398bdbec8a58c156ea"
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "fileName",
+                        "value": "/home/flyingracoon/Downloads/xdVLWatO.jpeg"
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "8c941c3a-2284-46eb-8213-d12fb67e3416",
+            "colId": "45dfde07-e7c0-43ff-adea-caa42fa32b69",
+            "containerId": "660a5102-79ea-44a3-89ef-f752b88ad0e2",
+            "name": "update product",
+            "url": "localhost:3001/api/product/66b0a05259193ec5cc02b575",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2024-08-31T07:19:52.296Z",
+            "modified": "2024-08-31T07:19:52.296Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "filename",
+                    "value": null,
+                    "isDisabled": true
+                }
+            ],
+            "body": {
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "test delete 1234"
+                    },
+                    {
+                        "name": "description",
+                        "value": "it's a vending machine 123"
+                    },
+                    {
+                        "name": "category",
+                        "value": "66b0497bb5e97c51d435dd93"
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "fileName",
+                        "value": "/C:/Users/Asus/Downloads/1e72059e76152108b329a82949cfcdb8.jpg"
+                    }
+                ],
+                "type": "formdata"
+            }
+        },
+        {
+            "_id": "d79f0aff-1898-4f2d-8853-57149758b24c",
+            "colId": "45dfde07-e7c0-43ff-adea-caa42fa32b69",
+            "containerId": "660a5102-79ea-44a3-89ef-f752b88ad0e2",
+            "name": "delete product",
+            "url": "localhost:3001/api/product/66d2d80c4d5c8e0c6688a376",
+            "method": "DELETE",
+            "sortNum": 70000,
+            "created": "2024-08-31T07:19:52.297Z",
+            "modified": "2024-08-31T08:56:18.865Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMiIsImVtYWlsIjoiaXRzdnVvbmcwODA2QGdtYWlsLmNvbSIsImlkIjoiNjZiM2FiOTgwNGE0ZWE0ZTdhNTY5Zjg2IiwiaWF0IjoxNzI1MDg4ODI1fQ.adxFZTLDzXrOLcN4n3M-_q6EIM3jnDNTDA65V-oifL4"
+                }
+            ],
+            "params": [
+                {
+                    "name": "filename",
+                    "value": "",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ]
+        },
+        {
+            "_id": "f082a50a-dfaf-4ee9-84bc-0934a559798f",
+            "colId": "45dfde07-e7c0-43ff-adea-caa42fa32b69",
+            "containerId": "660a5102-79ea-44a3-89ef-f752b88ad0e2",
+            "name": "get product",
+            "url": "localhost:3001/api/product?pageSize=0&currentPage=0",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2024-08-31T07:19:52.298Z",
+            "modified": "2024-09-01T19:41:04.968Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "pageSize",
+                    "value": "0",
+                    "isPath": false
+                },
+                {
+                    "name": "currentPage",
+                    "value": "0",
+                    "isPath": false
+                },
+                {
+                    "name": "category",
+                    "value": "66d37c235a4a7fc5b7d7a3d0",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ]
+        },
+        {
+            "_id": "66980558-6cfc-4134-9fdc-668d8ff6ef62",
+            "colId": "45dfde07-e7c0-43ff-adea-caa42fa32b69",
+            "containerId": "660a5102-79ea-44a3-89ef-f752b88ad0e2",
+            "name": "get product by id",
+            "url": "localhost:3001/api/product/66afccaa9d4e8c1cffe12dc1",
+            "method": "GET",
+            "sortNum": 90000,
+            "created": "2024-08-31T07:19:52.299Z",
+            "modified": "2024-08-31T07:19:52.299Z",
+            "headers": []
+        },
+        {
+            "_id": "0402488e-cca4-4efd-97ef-0beed45e32db",
+            "colId": "45dfde07-e7c0-43ff-adea-caa42fa32b69",
+            "containerId": "eb82161a-4ff1-4eb2-af65-4268b9057115",
+            "name": "create guest info",
+            "url": "localhost:3001/api/guestInfo",
+            "method": "POST",
+            "sortNum": 100000,
+            "created": "2024-08-31T07:19:52.301Z",
+            "modified": "2024-08-31T19:03:17.138Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"firstName\": \"Wade\",\n    \"lastName\": \"Wilson\",\n    \"email\": \"deadpool@disney.com\",\n    \"phoneNumber\": \"123\",\n    \"message\": \" 123   123     NOt a message  123  \"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "3081d422-a0d6-44f2-8f2c-52959c3980c2",
+            "colId": "45dfde07-e7c0-43ff-adea-caa42fa32b69",
+            "containerId": "eb82161a-4ff1-4eb2-af65-4268b9057115",
+            "name": "get guest infos",
+            "url": "localhost:3001/api/guestInfo?pageSize=0&currentPage=0",
+            "method": "GET",
+            "sortNum": 110000,
+            "created": "2024-08-31T07:19:52.302Z",
+            "modified": "2024-08-31T07:19:52.302Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "pageSize",
+                    "value": "0"
+                },
+                {
+                    "name": "currentPage",
+                    "value": "0"
+                }
+            ]
+        },
+        {
+            "_id": "0a80d0b2-5634-4848-b27d-41332039e268",
+            "colId": "45dfde07-e7c0-43ff-adea-caa42fa32b69",
+            "containerId": "eb82161a-4ff1-4eb2-af65-4268b9057115",
+            "name": "delete request",
+            "url": "localhost:3001/api/guestInfo/66b0fcd82c2bc0df75685091",
+            "method": "DELETE",
+            "sortNum": 120000,
+            "created": "2024-08-31T07:19:52.303Z",
+            "modified": "2024-08-31T07:19:52.303Z",
+            "headers": []
+        },
+        {
+            "_id": "8bb995ae-4789-4f4a-a9bd-5525065cf806",
+            "colId": "45dfde07-e7c0-43ff-adea-caa42fa32b69",
+            "containerId": "43d62e11-8280-4224-b815-0ca03a6ca7a1",
+            "name": "create user",
+            "url": "localhost:3001/api/user",
+            "method": "POST",
+            "sortNum": 130000,
+            "created": "2024-08-31T07:19:52.304Z",
+            "modified": "2024-08-31T07:19:52.304Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n    \"username\": \"admin30s11\",\r\n    \"password\": \"admin\",\r\n    \"email\": \"itsvuong080691d11@gmail.com\",\r\n    \"random field\": \"Well hello there\"\r\n}"
+            }
+        },
+        {
+            "_id": "d80aaecd-260f-47da-891d-f28a899ed710",
+            "colId": "45dfde07-e7c0-43ff-adea-caa42fa32b69",
+            "containerId": "43d62e11-8280-4224-b815-0ca03a6ca7a1",
+            "name": "authenticate user",
+            "url": "localhost:3001/api/user/authenticate",
+            "method": "POST",
+            "sortNum": 140000,
+            "created": "2024-08-31T07:19:52.305Z",
+            "modified": "2024-08-31T07:20:25.615Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"username\": \"admin2\",\n    \"password\": \"TheAlmightyAdmin\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "ca765579-338e-4288-b514-de3f21884779",
+            "colId": "45dfde07-e7c0-43ff-adea-caa42fa32b69",
+            "containerId": "43d62e11-8280-4224-b815-0ca03a6ca7a1",
+            "name": "get all users",
+            "url": "localhost:3001/api/user/?pageSize=1&currentPage=0",
+            "method": "GET",
+            "sortNum": 150000,
+            "created": "2024-08-31T07:19:52.306Z",
+            "modified": "2024-08-31T07:19:52.306Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "pageSize",
+                    "value": "1"
+                },
+                {
+                    "name": "currentPage",
+                    "value": "0"
+                }
+            ]
+        },
+        {
+            "_id": "8b180345-0723-4da6-8a83-f13df295d4ee",
+            "colId": "45dfde07-e7c0-43ff-adea-caa42fa32b69",
+            "containerId": "43d62e11-8280-4224-b815-0ca03a6ca7a1",
+            "name": "get user by username",
+            "url": "localhost:3001/api/user/admin1",
+            "method": "GET",
+            "sortNum": 160000,
+            "created": "2024-08-31T07:19:52.307Z",
+            "modified": "2024-08-31T07:19:52.307Z",
+            "headers": []
+        },
+        {
+            "_id": "e16d0e61-ce4e-44b1-958b-0ac94108a805",
+            "colId": "45dfde07-e7c0-43ff-adea-caa42fa32b69",
+            "containerId": "43d62e11-8280-4224-b815-0ca03a6ca7a1",
+            "name": "update user",
+            "url": "localhost:3001/api/user/update",
+            "method": "POST",
+            "sortNum": 170000,
+            "created": "2024-08-31T07:19:52.308Z",
+            "modified": "2024-08-31T07:19:52.308Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "1010a36af463519988f813974dd0b335e85965550bf061ae59a6b8065c89a8a1"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n    \"newPassword\": \"123\"\r\n}"
+            }
+        },
+        {
+            "_id": "0bc69d9a-8d6f-4896-ad76-e971791e71c5",
+            "colId": "45dfde07-e7c0-43ff-adea-caa42fa32b69",
+            "containerId": "7ec1aaa6-ab82-4b39-a504-f01f76480095",
+            "name": "get password reset token",
+            "url": "localhost:3001/api/reset-password/itsvuong0806@gmail.com",
+            "method": "GET",
+            "sortNum": 180000,
+            "created": "2024-08-31T07:19:52.309Z",
+            "modified": "2024-08-31T07:19:52.309Z",
+            "headers": []
+        },
+        {
+            "_id": "dae36d75-69ad-460a-a1db-b0030703ed46",
+            "colId": "45dfde07-e7c0-43ff-adea-caa42fa32b69",
+            "containerId": "7ec1aaa6-ab82-4b39-a504-f01f76480095",
+            "name": "reset password",
+            "url": "localhost:3001/api/reset-password/",
+            "method": "POST",
+            "sortNum": 190000,
+            "created": "2024-08-31T07:19:52.310Z",
+            "modified": "2024-08-31T07:19:52.310Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n    \"userId\": \"66b3ab9804a4ea4e7a569f86\",\r\n    \"token\": \"e5eaa03b5e43891dfba537c53939864a81564dc063ba2eef8938c9d2f0f04b18\",\r\n    \"password\": \"TheAlmightyAdmin\"\r\n}"
+            }
+        }
+    ],
+    "ref": "g2n2dSWrAcGd7ZrKkkE23RBNld-rhPyzWJiqu8fYSk7CVxK1NKx0oit8wVnffytkzPL-1ITJzqKmeGANQyNWLg"
+}

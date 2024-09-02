@@ -12,7 +12,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 const api = router
   .use('/product', upload.single('fileName'), product)
-  .use('/category', category)
+  .use('/category', upload.single('fileName'), category)
   .use('/guestInfo', guestInfo)
   .use('/user', user)
   .use('/reset-password', resetPassword)

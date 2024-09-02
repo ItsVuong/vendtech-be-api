@@ -2,7 +2,7 @@ const { HttpException } = require('../exceptions/exception');
 const Category = require('../models/category.model');
 
 async function createCategory(data){
-    const category = new Category({name: data.name});
+    const category = new Category({name: data.name, description: data.description, image: data.image});
     return await category.save();
 }
 

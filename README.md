@@ -25,14 +25,14 @@
     - Create category 
         - Path: /api/category
         - Method: POST
-        - body: { name: String }
-        - header: { authorization: ACCESS_TOKEN }
+        - body: { name: String, description: String, fileName: image file }
+        - header: { content-type: multipart/form-data, authorization: ACCESS_TOKEN }
 
     - Update category
         - Path: /api/category/:id
         - Method: POST
-        - body: { name: String }
-        - header: { authorization: ACCESS_TOKEN }
+        - body: { name: String, description: String, fileName: image file } (all fileds are optional)
+        - header: { content-type: multipart/form-data, authorization: ACCESS_TOKEN }
 
 ### Product
     - Get product
@@ -41,6 +41,7 @@
         - Params: 
             - pageSize: number (Get all product if pageSize = 0)
             - currentPage: number
+            - category: String (category id)
 
     - Delete product
         - Path: /api/product/:id

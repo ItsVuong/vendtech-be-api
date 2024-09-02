@@ -1,6 +1,7 @@
 const config = require('../configs/firebase.config');
 const { initializeApp } = require('firebase/app');
 const { getStorage, ref, getDownloadURL, uploadBytesResumable, deleteObject } = require('firebase/storage');
+const { HttpException } = require('../exceptions/exception');
 
 //intialize a firebase application
 initializeApp(config.firebaseConfig);
@@ -9,11 +10,16 @@ initializeApp(config.firebaseConfig);
 const storage = getStorage();
 
 async function uploadImage(file) {
-    try {
+
+        //validate file type
+        if(!file.mimetype || !file.mimetype.includes("image")){
+            throw new HttpException(400, "File must be an image.");
+        }
+
         const dateTime = giveCurrentDateTime();
         const saveName = dateTime + "_" + (file.originalname);
         const storageRef = ref(storage, 'files/' + saveName);
-    
+        
         const metadata = {
             contentType: file.mimetype
         };
@@ -28,17 +34,18 @@ async function uploadImage(file) {
             type: file.mimetype,
             url: downloadURL
         };
-    } catch (error) {
-        console.log(error);
-        return null;
-    }
+
 }
 
-async function deleteImage(imageName){
+async function deleteImage(imageName) {
+    try {
         const storageRef = ref(storage, 'files/' + imageName);
         const result = await deleteObject(storageRef);
         console.log("/n Delete image result /n" + result);
         return result;
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 const giveCurrentDateTime = () => {

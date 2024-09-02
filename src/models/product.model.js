@@ -1,10 +1,5 @@
+const ImageSchema = require('./Image.Schema');
 const mongoose = require('mongoose');
-
-const ImageSchema = mongoose.Schema({
-    name: String,
-    type: String,
-    url: String,
-  });
 
 const ProductSchema = mongoose.Schema(
     {
@@ -15,11 +10,11 @@ const ProductSchema = mongoose.Schema(
 
         image:{
             type: ImageSchema,
-            required: [true, "Required prodcuct image."]
+            required: [true, "Require product image."]
         },
 
         category:{
-            type: String,
+            type: mongoose.Types.ObjectId,
             ref: "Category" 
         },
 
