@@ -31,7 +31,7 @@
     - Update category
         - Path: /api/category/:id
         - Method: POST
-        - body: { name: String, description: String, fileName: image file } (all fileds are optional)
+        - body: { name: String, description: String, fileName: image file } (all fields are optional)
         - header: { content-type: multipart/form-data, authorization: ACCESS_TOKEN }
 
 ### Product
@@ -55,6 +55,56 @@
 
     - Update product
         - Path: /api/product/:id
+        - Method: POST
+        - headers: { content-type: multipart/form-data, authorization: ACCESS_TOKEN }
+        - body: { fileName: file, name: string, description: string, category: string }
+
+### Food and drink category
+    - Get
+        - Method: GET
+        - /api/food-drink-category
+        - Params: 
+            - pageSize: number (Get all category if pageSize = 0)
+            - currentPage: number
+
+    - Delete
+        - Path: /api/food-drink-category/:id
+        - Method: DELETE
+        - header: { authorization: ACCESS_TOKEN }
+
+    - Create 
+        - Path: /api/food-drink-category
+        - Method: POST
+        - body: { name: String, description: String, fileName: image file }
+        - header: { content-type: multipart/form-data, authorization: ACCESS_TOKEN }
+
+    - Update
+        - Path: /api/food-drink-category/:id
+        - Method: POST
+        - body: { name: String, description: String, fileName: image file } (all fields are optional)
+        - header: { content-type: multipart/form-data, authorization: ACCESS_TOKEN }
+
+### Food and drink
+    - Get
+        - Path: /api/food-drink
+        - Method: GET
+        - Params: 
+            - pageSize: number (Get all items if pageSize = 0)
+            - currentPage: number
+            - category: String (category id)
+
+    - Delete
+        - Path: /api/food-drink/:id
+        - Method: DELETE
+
+    - Create product 
+        - Path: /api/food-drink
+        - Method: POST
+        - headers: { content-type: multipart/form-data, authorization: ACCESS_TOKEN }
+        - body: { fileName: file, name: string, description: string, category: string (optional) }
+
+    - Update product
+        - Path: /api/food-drink/:id
         - Method: POST
         - headers: { content-type: multipart/form-data, authorization: ACCESS_TOKEN }
         - body: { fileName: file, name: string, description: string, category: string }

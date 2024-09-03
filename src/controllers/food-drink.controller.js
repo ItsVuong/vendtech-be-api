@@ -1,19 +1,20 @@
+
 const config = require('../configs/firebase.config');
 const { initializeApp } = require('firebase/app');
 const uploadService = require('../services/image-upload.service');
-const productService = require('../services/product.service');
-const categoryService = require('../services/category.service');
+const foodAndDrinkService = require('../services/food-drink.service');
+const categoryService = require('../services/food-drink-category.service');
 const { default: mongoose } = require('mongoose');
 const { HttpException } = require('../exceptions/exception');
-const { validateProduct, validateGetProduct } = require('../utils/request-validator');
+const { validateCreateFoodAndDrink, validateGetProduct, validateGetFoodAndDrink } = require('../utils/request-validator');
 
 //intialize a firebase application
 initializeApp(config.firebaseConfig);
 
-async function createProductController(req, res, next){
+async function createFoodAndDrink(req, res, next){
     try {
         //validate category field
-        const error = await validateProduct(req.body);
+        const error = await validateCreateFoodAndDrink(req.body);
         const uploadedFile = req.file;
         if(!uploadedFile){
             error.image = "Product image is required."
@@ -34,7 +35,7 @@ async function createProductController(req, res, next){
             category: req.body.category?.trim()
         }
 
-        productService.createProduct(product)
+        foodAndDrinkService.createFoodAndDrink(product)
             .then(result => res.status(201).send(result))
             .catch(error => {
                 console.log(error)
@@ -50,12 +51,12 @@ async function createProductController(req, res, next){
     }
 };
 
-async function deleteProduct(req, res, next){
+async function deleteFoodAndDrink(req, res, next){
     try {
         if(!req.params.id || !mongoose.isValidObjectId(req.params.id)){
            throw new HttpException(400, "Invalid object id")
         }
-        const result = await productService.deleteProduct(req.params.id);
+        const result = await foodAndDrinkService.deleteFoodAndDrink(req.params.id);
         res.status(201).send(result);
     } catch (error) {
         console.log(error);
@@ -63,14 +64,14 @@ async function deleteProduct(req, res, next){
     }
 }
 
-async function getProducts(req, res, next){
+async function getFoodAndDrinks(req, res, next){
     try {
-        const error = await validateGetProduct(req.query);
+        const error = await validateGetFoodAndDrink(req.query);
         if(Object.keys(error).length){
             throw new HttpException(400, "Bad request.", error);
         }
 
-        const result = await productService.getProducts(req.query.pageSize, req.query.currentPage, req.query?.category);
+        const result = await foodAndDrinkService.getFoodAndDrinks(req.query.pageSize, req.query.currentPage, req.query?.category);
         return res.status(200).send(result)
     } catch (error) {
        console.log(error);
@@ -78,7 +79,7 @@ async function getProducts(req, res, next){
     }
 }
 
-async function getProductById(req, res, next){
+async function getFoodAndDrinkById(req, res, next){
     const error = new Error();
     try {
         const id = req.params.id;
@@ -88,7 +89,7 @@ async function getProductById(req, res, next){
             throw error;
         }
 
-        const result = await productService.getProductById(id);
+        const result = await foodAndDrinkService.getFoodAndDrinkById(id);
         return res.status(200).send(result);
     } catch (error) {
         console.log(error);
@@ -96,13 +97,13 @@ async function getProductById(req, res, next){
     }
 }
 
-async function updateProductById(req, res, next) {
+async function updateFoodAndDrink(req, res, next) {
     try {
         //validate object id
         const id = req.params.id;
         if (!id || !mongoose.isValidObjectId(id)) {
             throw new HttpException(400, "Bad request.", {id: "Invalid id."})
-        } else if (!await productService.getProductById(id)) {
+        } else if (!await foodAndDrinkService.getFoodAndDrinkById(id)) {
             throw new HttpException(400, "Bad request.", {id: "Item not found."})
         }
 
@@ -115,6 +116,7 @@ async function updateProductById(req, res, next) {
             productObject.description = req.body.description;
         }
         //validate category field
+        const error = new Error();
         if (req.body.category) {
             if (req.body.category) {
                 if (!mongoose.isValidObjectId(req.body.category)) {
@@ -133,7 +135,7 @@ async function updateProductById(req, res, next) {
         const uploadedFile = req.file;
         if (uploadedFile) {
             const image = await uploadService.uploadImage(uploadedFile);
-            const oldProduct = await productService.getProductById(id);
+            const oldProduct = await foodAndDrinkService.getFoodAndDrinkById(id);
             uploadService.deleteImage(oldProduct.image?.name);
             productObject.image = image;
         }
@@ -142,7 +144,7 @@ async function updateProductById(req, res, next) {
             return res.status(400).json({ message: "update object cannot be empty!" })
         }
 
-        productService.updateProductById(id, productObject)
+        foodAndDrinkService.updateFoodAndDrinkById(id, productObject)
             .then(result => {
                 res.status(201).send(result)
             })
@@ -160,9 +162,9 @@ async function updateProductById(req, res, next) {
 }
 
 module.exports = {
-    createProductController,
-    deleteProduct,
-    getProducts,
-    getProductById,
-    updateProductById
+    createFoodAndDrink,
+    deleteFoodAndDrink,
+    getFoodAndDrinks,
+    getFoodAndDrinkById,
+    updateFoodAndDrink
 }

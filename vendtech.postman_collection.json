@@ -13,7 +13,13 @@
 					"name": "delete category",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMSIsImVtYWlsIjoia29yb3NlbmFpMDgwNkBnbWFpbC5jb20iLCJpZCI6IjY2YjMzNmIxN2VhNzQyZGM2MTcyMGExOCIsImlhdCI6MTcyNTM3NjAzNH0.h61eyF5tZWJv7G2xel1aB-TOk-eioqe1mLKTsSMoX9g",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"name\": \"vending machine 6 pro plus +\"\r\n}",
@@ -24,7 +30,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3001/api/category/66b09e8c604fc706ac378d1d",
+							"raw": "localhost:3001/api/category/66b0523d8bdbec8a58c156ed",
 							"host": [
 								"localhost"
 							],
@@ -32,7 +38,7 @@
 							"path": [
 								"api",
 								"category",
-								"66b09e8c604fc706ac378d1d"
+								"66b0523d8bdbec8a58c156ed"
 							]
 						}
 					},
@@ -40,18 +46,30 @@
 				},
 				{
 					"name": "get categories",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"host": true
+						}
+					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Host",
+								"value": "_",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "localhost:3001/api/category?pageSize=0&currentPage=0",
+							"raw": "localhost:3001/api/category/?pageSize=0&currentPage=0",
 							"host": [
 								"localhost"
 							],
 							"port": "3001",
 							"path": [
 								"api",
-								"category"
+								"category",
+								""
 							],
 							"query": [
 								{
@@ -71,18 +89,35 @@
 					"name": "update category",
 					"request": {
 						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": null\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMSIsImVtYWlsIjoia29yb3NlbmFpMDgwNkBnbWFpbC5jb20iLCJpZCI6IjY2YjMzNmIxN2VhNzQyZGM2MTcyMGExOCIsImlhdCI6MTcyNTM3NjAzNH0.h61eyF5tZWJv7G2xel1aB-TOk-eioqe1mLKTsSMoX9g",
+								"type": "text"
 							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "New category",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "New category",
+									"type": "text"
+								},
+								{
+									"key": "fileName",
+									"type": "file",
+									"src": "/C:/Users/Asus/Downloads/Phantom-Thieves-of-Hearts-Logo.png"
+								}
+							]
 						},
 						"url": {
-							"raw": "localhost:3001/api/category/66b0497bb5e97c51d435dd93",
+							"raw": "localhost:3001/api/category/66b0523d8bdbec8a58c156ed",
 							"host": [
 								"localhost"
 							],
@@ -90,7 +125,7 @@
 							"path": [
 								"api",
 								"category",
-								"66b0497bb5e97c51d435dd93"
+								"66b0523d8bdbec8a58c156ed"
 							]
 						}
 					},
@@ -100,15 +135,32 @@
 					"name": "create category",
 					"request": {
 						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"vending machine 5 ultra +\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMSIsImVtYWlsIjoia29yb3NlbmFpMDgwNkBnbWFpbC5jb20iLCJpZCI6IjY2YjMzNmIxN2VhNzQyZGM2MTcyMGExOCIsImlhdCI6MTcyNTM3NjAzNH0.h61eyF5tZWJv7G2xel1aB-TOk-eioqe1mLKTsSMoX9g",
+								"type": "text"
 							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "New category",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "New category",
+									"type": "text"
+								},
+								{
+									"key": "fileName",
+									"type": "file",
+									"src": "/C:/Users/Asus/Downloads/454653278_8886942787988739_8503067575459089561_n.jpg"
+								}
+							]
 						},
 						"url": {
 							"raw": "localhost:3001/api/category/",
@@ -124,6 +176,223 @@
 						}
 					},
 					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "food-and-drink-category",
+			"item": [
+				{
+					"name": "delete category",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMSIsImVtYWlsIjoia29yb3NlbmFpMDgwNkBnbWFpbC5jb20iLCJpZCI6IjY2YjMzNmIxN2VhNzQyZGM2MTcyMGExOCIsImlhdCI6MTcyNTM3NjAzNH0.h61eyF5tZWJv7G2xel1aB-TOk-eioqe1mLKTsSMoX9g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"vending machine 6 pro plus +\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3001/api/food-drink-category/66d7331497e0cea0d1395fd0",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"food-drink-category",
+								"66d7331497e0cea0d1395fd0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get categories",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"host": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Host",
+								"value": "_",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3001/api/food-drink-category/?pageSize=0&currentPage=0",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"food-drink-category",
+								""
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "0"
+								},
+								{
+									"key": "currentPage",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMSIsImVtYWlsIjoia29yb3NlbmFpMDgwNkBnbWFpbC5jb20iLCJpZCI6IjY2YjMzNmIxN2VhNzQyZGM2MTcyMGExOCIsImlhdCI6MTcyNTM3NjAzNH0.h61eyF5tZWJv7G2xel1aB-TOk-eioqe1mLKTsSMoX9g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "New category",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "New category",
+									"type": "text"
+								},
+								{
+									"key": "fileName",
+									"type": "file",
+									"src": "/C:/Users/Asus/Downloads/m2i8m2K9m2N4G6A0.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3001/api/food-drink-category/66d730a29c175a6655b4edbb",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"food-drink-category",
+								"66d730a29c175a6655b4edbb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMSIsImVtYWlsIjoia29yb3NlbmFpMDgwNkBnbWFpbC5jb20iLCJpZCI6IjY2YjMzNmIxN2VhNzQyZGM2MTcyMGExOCIsImlhdCI6MTcyNTM3NjAzNH0.h61eyF5tZWJv7G2xel1aB-TOk-eioqe1mLKTsSMoX9g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "New category",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "New category",
+									"type": "text"
+								},
+								{
+									"key": "fileName",
+									"type": "file",
+									"src": "/C:/Users/Asus/Downloads/454653278_8886942787988739_8503067575459089561_n.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3001/api/food-drink-category/",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"food-drink-category",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
@@ -182,7 +451,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpZCI6IjY2YjExZDZhMzdlOWQxNzIxNmQ2NDQ4NyIsImlhdCI6MTcyMzAxOTUwNSwiZXhwIjoxNzIzMDIzMTA1fQ.vBc6IG8055KhMQWIU1hEuWQIqKM46GsGodtVG5WucTI",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMSIsImVtYWlsIjoia29yb3NlbmFpMDgwNkBnbWFpbC5jb20iLCJpZCI6IjY2YjMzNmIxN2VhNzQyZGM2MTcyMGExOCIsImlhdCI6MTcyNTM3NjAzNH0.h61eyF5tZWJv7G2xel1aB-TOk-eioqe1mLKTsSMoX9g",
 								"type": "text"
 							}
 						],
@@ -192,7 +461,7 @@
 								{
 									"key": "fileName",
 									"type": "file",
-									"src": "/C:/Users/Asus/Downloads/1920x1080.jpg"
+									"src": "/C:/Users/Asus/Downloads/world-map-continents-oceans.webp"
 								},
 								{
 									"key": "name",
@@ -206,7 +475,7 @@
 								},
 								{
 									"key": "category",
-									"value": "66b0497bb5e97c51d435dd93",
+									"value": "66d37c235a4a7fc5b7d7a3d0",
 									"type": "text"
 								}
 							]
@@ -236,34 +505,43 @@
 					"name": "update product",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMSIsImVtYWlsIjoia29yb3NlbmFpMDgwNkBnbWFpbC5jb20iLCJpZCI6IjY2YjMzNmIxN2VhNzQyZGM2MTcyMGExOCIsImlhdCI6MTcyNTM3NjAzNH0.h61eyF5tZWJv7G2xel1aB-TOk-eioqe1mLKTsSMoX9g",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "formdata",
 							"formdata": [
 								{
 									"key": "fileName",
 									"type": "file",
-									"src": "/C:/Users/Asus/Downloads/1e72059e76152108b329a82949cfcdb8.jpg"
+									"src": "/C:/Users/Asus/Downloads/454653278_8886942787988739_8503067575459089561_n.jpg",
+									"disabled": true
 								},
 								{
 									"key": "name",
-									"value": "test delete 1234",
-									"type": "text"
+									"value": "Mamamia",
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "description",
-									"value": "it's a vending machine 123",
-									"type": "text"
+									"value": "it's a vending machine 123456789",
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "category",
-									"value": "66b0497bb5e97c51d435dd93",
+									"value": "66b0523d8bdbec8a58c156ed",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:3001/api/product/66b0a05259193ec5cc02b575",
+							"raw": "localhost:3001/api/product/66d727e7ad1feb6094ee1df2",
 							"host": [
 								"localhost"
 							],
@@ -271,7 +549,7 @@
 							"path": [
 								"api",
 								"product",
-								"66b0a05259193ec5cc02b575"
+								"66d727e7ad1feb6094ee1df2"
 							],
 							"query": [
 								{
@@ -288,9 +566,15 @@
 					"name": "delete product",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMSIsImVtYWlsIjoia29yb3NlbmFpMDgwNkBnbWFpbC5jb20iLCJpZCI6IjY2YjMzNmIxN2VhNzQyZGM2MTcyMGExOCIsImlhdCI6MTcyNTM3NjAzNH0.h61eyF5tZWJv7G2xel1aB-TOk-eioqe1mLKTsSMoX9g",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "localhost:3001/api/product/66b0a124ed86f5e71b939731",
+							"raw": "localhost:3001/api/product/66d727e7ad1feb6094ee1df2",
 							"host": [
 								"localhost"
 							],
@@ -298,7 +582,7 @@
 							"path": [
 								"api",
 								"product",
-								"66b0a124ed86f5e71b939731"
+								"66d727e7ad1feb6094ee1df2"
 							],
 							"query": [
 								{
@@ -317,7 +601,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3001/api/product?pageSize=0&currentPage=2",
+							"raw": "localhost:3001/api/product?pageSize=0&currentPage=2&category=66d37c235a4a7fc5b7d7a3d0",
 							"host": [
 								"localhost"
 							],
@@ -334,6 +618,10 @@
 								{
 									"key": "currentPage",
 									"value": "2"
+								},
+								{
+									"key": "category",
+									"value": "66d37c235a4a7fc5b7d7a3d0"
 								}
 							]
 						}
@@ -346,7 +634,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3001/api/product/66afccaa9d4e8c1cffe12dc1",
+							"raw": "localhost:3001/api/product/66c4a64435d97dfb9c7750c7",
 							"host": [
 								"localhost"
 							],
@@ -354,7 +642,255 @@
 							"path": [
 								"api",
 								"product",
-								"66afccaa9d4e8c1cffe12dc1"
+								"66c4a64435d97dfb9c7750c7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "food-and-drink",
+			"item": [
+				{
+					"name": "create food-and-drink",
+					"request": {
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								},
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "secret",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "payload",
+									"value": "{}",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMSIsImVtYWlsIjoia29yb3NlbmFpMDgwNkBnbWFpbC5jb20iLCJpZCI6IjY2YjMzNmIxN2VhNzQyZGM2MTcyMGExOCIsImlhdCI6MTcyNTM3NjAzNH0.h61eyF5tZWJv7G2xel1aB-TOk-eioqe1mLKTsSMoX9g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fileName",
+									"type": "file",
+									"src": "/C:/Users/Asus/Downloads/454653278_8886942787988739_8503067575459089561_n.jpg"
+								},
+								{
+									"key": "name",
+									"value": "test delete",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "it's a vending machine",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "66d733ba58b7445e5d60bfec",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3001/api/food-drink",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"food-drink"
+							],
+							"query": [
+								{
+									"key": "filename",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update food-drink",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMSIsImVtYWlsIjoia29yb3NlbmFpMDgwNkBnbWFpbC5jb20iLCJpZCI6IjY2YjMzNmIxN2VhNzQyZGM2MTcyMGExOCIsImlhdCI6MTcyNTM3NjAzNH0.h61eyF5tZWJv7G2xel1aB-TOk-eioqe1mLKTsSMoX9g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fileName",
+									"type": "file",
+									"src": "/C:/Users/Asus/Downloads/dns.PNG"
+								},
+								{
+									"key": "name",
+									"value": "Mamamia",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "it's a vending machine 123456789",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "66b0523d8bdbec8a58c156ed",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3001/api/food-drink/66d736be2a2247b9c8c60312",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"food-drink",
+								"66d736be2a2247b9c8c60312"
+							],
+							"query": [
+								{
+									"key": "filename",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete food-drink",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluMSIsImVtYWlsIjoia29yb3NlbmFpMDgwNkBnbWFpbC5jb20iLCJpZCI6IjY2YjMzNmIxN2VhNzQyZGM2MTcyMGExOCIsImlhdCI6MTcyNTM3NjAzNH0.h61eyF5tZWJv7G2xel1aB-TOk-eioqe1mLKTsSMoX9g",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3001/api/food-drink/66d733e558b7445e5d60bff6",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"food-drink",
+								"66d733e558b7445e5d60bff6"
+							],
+							"query": [
+								{
+									"key": "filename",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get food-drink",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3001/api/food-drink?pageSize=0&currentPage=2",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"food-drink"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "0"
+								},
+								{
+									"key": "currentPage",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get food-drink by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3001/api/food-drink/66d736be2a2247b9c8c60312",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"food-drink",
+								"66d736be2a2247b9c8c60312"
 							]
 						}
 					},
@@ -397,7 +933,13 @@
 					"name": "get guest infos",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpZCI6IjY2YjExZDZhMzdlOWQxNzIxNmQ2NDQ4NyIsImlhdCI6MTcyNDM5OTQxMCwiZXhwIjoxNzI0NDAzMDEwfQ.SX1jQ-QYACMnCrPm6xKl1LZ0murASuE9LYXRb9JK5W4",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "localhost:3001/api/guestInfo?pageSize=0&currentPage=0",
 							"host": [
@@ -462,11 +1004,15 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3001/api/user",
+							"raw": "https://103.173.154.237:9999/api/user",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"103",
+								"173",
+								"154",
+								"237"
 							],
-							"port": "3001",
+							"port": "9999",
 							"path": [
 								"api",
 								"user"
@@ -482,7 +1028,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"admin2\",\r\n    \"password\": \"TheAlmightyAdmin\"\r\n}",
+							"raw": "{\r\n    \"username\": \"admin1\",\r\n    \"password\": \"admin\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -561,13 +1107,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "1010a36af463519988f813974dd0b335e85965550bf061ae59a6b8065c89a8a1",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpZCI6IjY2YjExZDZhMzdlOWQxNzIxNmQ2NDQ4NyIsImlhdCI6MTcyMzE4MDMxMiwiZXhwIjoxNzIzMTgzOTEyfQ.U0ZsUYsdOM7JMQQBj3QqQZ2-2cLax-8cgP0NW9CR9y0",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"newPassword\": \"123\"\r\n}",
+							"raw": "{\r\n    \"confirmPassword\": \"admin\",\r\n    \"newPassword\": \"admin\",\r\n    \"newUsername\": \"admin1\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -621,7 +1167,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userId\": \"66b3ab9804a4ea4e7a569f86\",\r\n    \"token\": \"e5eaa03b5e43891dfba537c53939864a81564dc063ba2eef8938c9d2f0f04b18\",\r\n    \"password\": \"TheAlmightyAdmin\"\r\n}",
+							"raw": "{\r\n    \"userId\": \"66b479402c6fad81cf635d63\",\r\n    \"token\": \"c5f3a20aaa2f3c33c937bf4bef1eb04287e31b7d28bca4cfd792421e72ec9fa5\",\r\n    \"password\": \"TheAlmightyAdmin\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

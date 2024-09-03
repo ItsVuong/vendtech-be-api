@@ -1,4 +1,5 @@
 const categoryService = require('../services/category.service');
+const foodAndDrinkCategoryService = require('../services/food-drink-category.service');
 const { default: mongoose } = require('mongoose');
 
 function isEmail(email) {
@@ -34,13 +35,13 @@ function validateGuestInfo(guestInfo){
 async function validateProduct(product){
     const error = {};
 
-    if(!product.name.trim()){
+    if(!product.name?.trim()){
         error.username = "Product name cannot be empty";
     }
-    if(!product.description.trim()){
+    if(!product.description?.trim()){
         error.description = "Product description cannot be empty";
     }
-    if(!product.category.trim()){
+    if(!product.category?.trim()){
         error.category = "Product category cannot be empty";
     } else {
         if (!mongoose.isValidObjectId(product.category)){
@@ -55,6 +56,29 @@ async function validateProduct(product){
     return error;
 }
 
+async function validateCreateFoodAndDrink(product){
+    const error = {};
+
+    if(!product.name?.trim()){
+        error.username = "Product name cannot be empty";
+    }
+    if(!product.description?.trim()){
+        error.description = "Product description cannot be empty";
+    }
+    if(!product.category?.trim()){
+        error.category = "Product category cannot be empty";
+    } else {
+        if (!mongoose.isValidObjectId(product.category)){
+            error.category = "Invalid category Id";
+        }
+        else {
+            const category = await foodAndDrinkCategoryService.getCategoryById(product.category.trim());
+            category ? true : error.category = "Category not found."
+        }
+    }
+
+    return error;
+}
 async function validateGetProduct(query) {
     const error = {};
     const regex = /^\d+$/
@@ -66,6 +90,23 @@ async function validateGetProduct(query) {
         if (!mongoose.isValidObjectId(categoryId)) {
             error.category = "Invalid category Id.";
         } else if (!await categoryService.getCategoryById(categoryId)) {
+            error.category = "Category Id does not exsist.";
+        }
+    }
+    return error;
+}
+
+async function validateGetFoodAndDrink(query) {
+    const error = {};
+    const regex = /^\d+$/
+    if (!query.pageSize || !regex.test(query.pageSize)) {
+        error.pageSize = "invalid page size."
+    }
+    const categoryId = query?.category;
+    if (categoryId) {
+        if (!mongoose.isValidObjectId(categoryId)) {
+            error.category = "Invalid category Id.";
+        } else if (!await foodAndDrinkCategoryService.getCategoryById(categoryId)) {
             error.category = "Category Id does not exsist.";
         }
     }
@@ -103,7 +144,7 @@ function validateUserAuthenticate(userAuth){
 
 async function validateCategoryUpdate(category, image) {
     const error = {};
-    if(!category.description?.trim() && ! category.name?.trim() && !image){
+    if(!category.description?.trim() && !category.name?.trim() && !image){
         error.error = "Please provide atleast one update field.";
         return error;
     }
@@ -111,6 +152,28 @@ async function validateCategoryUpdate(category, image) {
         error.category = "Category id is invalid.";
     } else if (!await categoryService.getCategoryById(category.id)){
         error.category = "Category does not exist.";
+        return error;
+    }
+    if (category.description && !category.description?.trim()){
+        error.description = "Category description canot be empty.";
+    }
+    if (category.name && !category.name?.trim()){
+        error.name = "Category name cannot be empty.";
+    }
+    return error;
+}
+
+async function validateFoodAndDrinkCategoryUpdate(category, image) {
+    const error = {};
+    if(!category.description?.trim() && !category.name?.trim() && !image){
+        error.error = "Please provide atleast one update field.";
+        return error;
+    }
+    if (!mongoose.isValidObjectId(category.id)) {
+        error.category = "Category id is invalid.";
+    } else if (!await foodAndDrinkCategoryService.getCategoryById(category.id)){
+        error.category = "Category does not exist.";
+        return error;
     }
     if (category.description && !category.description?.trim()){
         error.description = "Category description canot be empty.";
@@ -127,5 +190,8 @@ module.exports = {
     validateUserAuthenticate,
     validateCategoryUpdate,
     validateProduct,
-    validateGetProduct
+    validateGetProduct,
+    validateCreateFoodAndDrink,
+    validateFoodAndDrinkCategoryUpdate,
+    validateGetFoodAndDrink
 }
