@@ -1,6 +1,8 @@
+const { HttpException } = require('../exceptions/exception');
 const categoryService = require('../services/category.service');
 const foodAndDrinkCategoryService = require('../services/food-drink-category.service');
 const { default: mongoose } = require('mongoose');
+const productService = require('../services/product.service');
 
 function isEmail(email) {
     const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -8,11 +10,6 @@ function isEmail(email) {
 }
 
 function validateGuestInfo(guestInfo){
-    const error = {};
-    // if(!Object.keys(guestInfo).length){
-    //     error.body = "Request body cannot be empty";
-    // }
-
     if(!guestInfo.firstName){
         error.firstName = "First name is invalid";
     }
@@ -52,8 +49,42 @@ async function validateProduct(product){
             category ? true : error.category = "Category not found."
         }
     }
-
     return error;
+}
+
+async function validateProductUpdate(product) {
+    //validate object id
+    const id = product.id;
+    validateId(id);
+    if (!await productService.getProductById(id)) {
+        throw new HttpException(400, "Bad request.", { id: "Item not found." })
+    }
+    //validate other fields
+    const productObject = {};
+    if (product.name?.trim()) {
+        productObject.name = product.name.trim();
+    }
+    if (product.description?.trim()) {
+        productObject.description = product.description.trim();
+    }
+    //validate category field
+    if (product.category) {
+        if (product.category) {
+            if (!mongoose.isValidObjectId(product.category)) {
+                throw new HttpException(400, "Invalid category id")
+            }
+            const category = await categoryService.getCategoryById(product.category);
+            if (!category) {
+                throw new HttpException(400, "Category not found")
+            }
+        }
+        productObject.category = product.category;
+    }
+    //validate images to be delete (nothing much, might update later)
+    if(product.deletedImages){
+        productObject.deletedImages = product.deletedImages;
+    }
+    return productObject;
 }
 
 async function validateCreateFoodAndDrink(product){
@@ -184,13 +215,23 @@ async function validateFoodAndDrinkCategoryUpdate(category, image) {
     return error;
 }
 
+function validateId(id) {
+    if (!id) {
+        throw new HttpException(400, "Bad request.", { id: "Please provide an id." });
+    } else if (!mongoose.isValidObjectId(id)) {
+        throw new HttpException(400, "Bad request.", { id: "Item id is invalid." });
+    }
+}
+
 module.exports = {
+    validateId,
     validateGuestInfo,
     validateUser,
     validateUserAuthenticate,
     validateCategoryUpdate,
     validateProduct,
     validateGetProduct,
+    validateProductUpdate,
     validateCreateFoodAndDrink,
     validateFoodAndDrinkCategoryUpdate,
     validateGetFoodAndDrink

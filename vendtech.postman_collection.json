@@ -30,7 +30,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3001/api/category/66b0523d8bdbec8a58c156ed",
+							"raw": "localhost:3001/api/category/66d72c7f14ba8f1ad25d6c4d",
 							"host": [
 								"localhost"
 							],
@@ -38,7 +38,7 @@
 							"path": [
 								"api",
 								"category",
-								"66b0523d8bdbec8a58c156ed"
+								"66d72c7f14ba8f1ad25d6c4d"
 							]
 						}
 					},
@@ -86,6 +86,37 @@
 					"response": []
 				},
 				{
+					"name": "get category by id",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"host": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Host",
+								"value": "_",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3001/api/category/66d37c235a4a7fc5b7d7a3d1",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"category",
+								"66d37c235a4a7fc5b7d7a3d1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "update category",
 					"request": {
 						"method": "POST",
@@ -101,23 +132,24 @@
 							"formdata": [
 								{
 									"key": "name",
-									"value": "New category",
+									"value": "Category 2",
 									"type": "text"
 								},
 								{
 									"key": "description",
-									"value": "New category",
+									"value": "This is category 2",
 									"type": "text"
 								},
 								{
 									"key": "fileName",
 									"type": "file",
-									"src": "/C:/Users/Asus/Downloads/Phantom-Thieves-of-Hearts-Logo.png"
+									"src": "/C:/Users/Asus/Downloads/Phantom-Thieves-of-Hearts-Logo.png",
+									"disabled": true
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:3001/api/category/66b0523d8bdbec8a58c156ed",
+							"raw": "localhost:3001/api/category/66ddffc6c32d2c9ece2f0a68",
 							"host": [
 								"localhost"
 							],
@@ -125,7 +157,7 @@
 							"path": [
 								"api",
 								"category",
-								"66b0523d8bdbec8a58c156ed"
+								"66ddffc6c32d2c9ece2f0a68"
 							]
 						}
 					},
@@ -147,18 +179,18 @@
 							"formdata": [
 								{
 									"key": "name",
-									"value": "New category",
+									"value": "Category 3",
 									"type": "text"
 								},
 								{
 									"key": "description",
-									"value": "New category",
+									"value": "This is category 3",
 									"type": "text"
 								},
 								{
 									"key": "fileName",
 									"type": "file",
-									"src": "/C:/Users/Asus/Downloads/454653278_8886942787988739_8503067575459089561_n.jpg"
+									"src": "/C:/Users/Asus/Downloads/OIP (1).jpg"
 								}
 							]
 						},
@@ -461,11 +493,14 @@
 								{
 									"key": "fileName",
 									"type": "file",
-									"src": "/C:/Users/Asus/Downloads/world-map-continents-oceans.webp"
+									"src": [
+										"/C:/Users/Asus/Downloads/cold-drink-vending-machine-1589011132-5420095.jpeg",
+										"/C:/Users/Asus/Downloads/OIP.jpg"
+									]
 								},
 								{
 									"key": "name",
-									"value": "test delete",
+									"value": "Vending machine 1",
 									"type": "text"
 								},
 								{
@@ -475,7 +510,7 @@
 								},
 								{
 									"key": "category",
-									"value": "66d37c235a4a7fc5b7d7a3d0",
+									"value": "66ddffc6c32d2c9ece2f0a68",
 									"type": "text"
 								}
 							]
@@ -518,30 +553,36 @@
 								{
 									"key": "fileName",
 									"type": "file",
-									"src": "/C:/Users/Asus/Downloads/454653278_8886942787988739_8503067575459089561_n.jpg",
-									"disabled": true
+									"src": "/C:/Users/Asus/Downloads/image-asset.jpeg"
 								},
 								{
 									"key": "name",
-									"value": "Mamamia",
+									"value": "Vending machine 1",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "description",
-									"value": "it's a vending machine 123456789",
+									"value": "it's a vending machine 12345",
 									"type": "text",
 									"disabled": true
 								},
 								{
 									"key": "category",
-									"value": "66b0523d8bdbec8a58c156ed",
-									"type": "text"
+									"value": "66d37c235a4a7fc5b7d7a3d0",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "deletedImages",
+									"value": "66ddee59012c2f56b82c312b",
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:3001/api/product/66d727e7ad1feb6094ee1df2",
+							"raw": "localhost:3001/api/product/66de004ec32d2c9ece2f0a7b",
 							"host": [
 								"localhost"
 							],
@@ -549,7 +590,7 @@
 							"path": [
 								"api",
 								"product",
-								"66d727e7ad1feb6094ee1df2"
+								"66de004ec32d2c9ece2f0a7b"
 							],
 							"query": [
 								{
@@ -574,7 +615,7 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:3001/api/product/66d727e7ad1feb6094ee1df2",
+							"raw": "localhost:3001/api/product/66d2dd70d50be7a49f2f2b69",
 							"host": [
 								"localhost"
 							],
@@ -582,7 +623,7 @@
 							"path": [
 								"api",
 								"product",
-								"66d727e7ad1feb6094ee1df2"
+								"66d2dd70d50be7a49f2f2b69"
 							],
 							"query": [
 								{
@@ -601,7 +642,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3001/api/product?pageSize=0&currentPage=2&category=66d37c235a4a7fc5b7d7a3d0",
+							"raw": "localhost:3001/api/product?pageSize=0&currentPage=2",
 							"host": [
 								"localhost"
 							],
@@ -621,7 +662,8 @@
 								},
 								{
 									"key": "category",
-									"value": "66d37c235a4a7fc5b7d7a3d0"
+									"value": "66d37c235a4a7fc5b7d7a3d0",
+									"disabled": true
 								}
 							]
 						}
@@ -853,7 +895,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3001/api/food-drink?pageSize=0&currentPage=2",
+							"raw": "localhost:3001/api/food-drink?pageSize=0&currentPage=2&category=66d733ba58b7445e5d60bfec",
 							"host": [
 								"localhost"
 							],
@@ -870,6 +912,10 @@
 								{
 									"key": "currentPage",
 									"value": "2"
+								},
+								{
+									"key": "category",
+									"value": "66d733ba58b7445e5d60bfec"
 								}
 							]
 						}

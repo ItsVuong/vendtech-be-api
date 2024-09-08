@@ -14,7 +14,9 @@ async function createProduct (data){
 async function deleteProduct(id){
     const result = await Product.findByIdAndDelete(id);
     if(result){
-        uploadService.deleteImage(result.image.name);
+        result.image.forEach(img => {
+            uploadService.deleteImage(img.name);
+        })
     }
     return result;
 }
@@ -22,7 +24,9 @@ async function deleteProduct(id){
 async function deleteProductByCategory(categoryId){
     const products = await getProducts(0,0,categoryId);
     products.data.forEach(element => {
-        uploadService.deleteImage(element.image.name);
+        element.image.forEach(img => {
+            uploadService.deleteImage(img.name);
+        })
     });
     return Product.deleteMany({category: categoryId});
 }

@@ -10,12 +10,6 @@ initializeApp(config.firebaseConfig);
 const storage = getStorage();
 
 async function uploadImage(file) {
-
-        //validate file type
-        if(!file.mimetype || !file.mimetype.includes("image")){
-            throw new HttpException(400, "File must be an image.");
-        }
-
         const dateTime = giveCurrentDateTime();
         const saveName = dateTime + "_" + (file.originalname);
         const storageRef = ref(storage, 'files/' + saveName);
@@ -34,7 +28,6 @@ async function uploadImage(file) {
             type: file.mimetype,
             url: downloadURL
         };
-
 }
 
 async function deleteImage(imageName) {

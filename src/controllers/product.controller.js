@@ -5,31 +5,34 @@ const productService = require('../services/product.service');
 const categoryService = require('../services/category.service');
 const { default: mongoose } = require('mongoose');
 const { HttpException } = require('../exceptions/exception');
-const { validateProduct, validateGetProduct } = require('../utils/request-validator');
+const { validateProduct, validateGetProduct, validateProductUpdate, validateId } = require('../utils/request-validator');
 
 //intialize a firebase application
 initializeApp(config.firebaseConfig);
 
-async function createProductController(req, res, next){
+async function createProductController(req, res, next) {
     try {
-        //validate category field
+        //validate
         const error = await validateProduct(req.body);
-        const uploadedFile = req.file;
-        if(!uploadedFile){
+        const uploadedFile = req.files;
+        if (!uploadedFile || uploadedFile?.length == 0) {
             error.image = "Product image is required."
         }
-        console.log("error: ", error)
         if (Object.keys(error).length) {
             throw new HttpException(400, 'Bad request.', error);
         }
 
         //upload image
-        const image = await uploadService.uploadImage(uploadedFile);
-    
+        const images = [];
+        for (const file of uploadedFile) {
+            const image = await uploadService.uploadImage(file);
+            images.push(image);
+        }
+
         //create product object 
         const product = {
             name: req.body.name?.trim(),
-            image: image,
+            image: images,
             description: req.body.description,
             category: req.body.category?.trim()
         }
@@ -38,12 +41,14 @@ async function createProductController(req, res, next){
             .then(result => res.status(201).send(result))
             .catch(error => {
                 console.log(error)
-                if (image) {
-                    uploadService.deleteImage(image.name)
-                        .catch(error => console.log(error));
+                if (images && images.length > 0) {
+                    images.forEach(image => {
+                        uploadService.deleteImage(image.name)
+                            .catch(error => console.log(error));
+                    })
                 }
                 next(error);
-            }) 
+            })
     } catch (error) {
         console.log(error);
         next(error);
@@ -52,9 +57,7 @@ async function createProductController(req, res, next){
 
 async function deleteProduct(req, res, next){
     try {
-        if(!req.params.id || !mongoose.isValidObjectId(req.params.id)){
-           throw new HttpException(400, "Invalid object id")
-        }
+        validateId(req.params.id);
         const result = await productService.deleteProduct(req.params.id);
         res.status(201).send(result);
     } catch (error) {
@@ -98,51 +101,38 @@ async function getProductById(req, res, next){
 
 async function updateProductById(req, res, next) {
     try {
-        //validate object id
-        const id = req.params.id;
-        if (!id || !mongoose.isValidObjectId(id)) {
-            throw new HttpException(400, "Bad request.", {id: "Invalid id."})
-        } else if (!await productService.getProductById(id)) {
-            throw new HttpException(400, "Bad request.", {id: "Item not found."})
-        }
-
-        //validate other fields
-        const productObject = {};
-        if (req.body.name?.trim()) {
-            productObject.name = req.body.name;
-        }
-        if (req.body.description?.trim()) {
-            productObject.description = req.body.description;
-        }
-        //validate category field
-        if (req.body.category) {
-            if (req.body.category) {
-                if (!mongoose.isValidObjectId(req.body.category)) {
-                    throw new HttpException(400, "Invalid category id")
+        //validate id and product object
+        req.body.id = req.params?.id;
+        const productObject = {...await validateProductUpdate(req.body)};
+        
+        const product = await productService.getProductById(req.params.id);
+        const images = [...product.image];
+        //remove images
+        if(productObject.deletedImages){
+            images.map(image => {
+                if(productObject.deletedImages.includes(image._id)){
+                    images.splice(images.indexOf(image), 1);
+                    uploadService.deleteImage(image.name);
                 }
-                const category = await categoryService.getCategoryById(req.body.category);
-                if (!category) {
-                    throw new HttpException(400, "Category not found")
-                }
+            });
+            productObject.image = images;      
+        }
+        //upload images
+        const uploadedFiles = req.files;
+        if (uploadedFiles && uploadedFiles.length > 0) {
+            //const images = await uploadService.uploadImage(uploadedFiles);
+            for(const file of uploadedFiles){
+                const image = await uploadService.uploadImage(file);
+                images.push(image);
             }
-            productObject.category = req.body.category;
+            productObject.image = images;
         }
-
-
-        //upload image
-        const uploadedFile = req.file;
-        if (uploadedFile) {
-            const image = await uploadService.uploadImage(uploadedFile);
-            const oldProduct = await productService.getProductById(id);
-            uploadService.deleteImage(oldProduct.image?.name);
-            productObject.image = image;
-        }
-
+        //check if product is empty
         if (!productObject) {
             return res.status(400).json({ message: "update object cannot be empty!" })
         }
-
-        productService.updateProductById(id, productObject)
+        //update product in database
+        productService.updateProductById(req.params.id, productObject)
             .then(result => {
                 res.status(201).send(result)
             })

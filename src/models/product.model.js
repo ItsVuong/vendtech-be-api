@@ -8,10 +8,10 @@ const ProductSchema = mongoose.Schema(
             required: [true, "Require product name."]
         },
 
-        image:{
+        image:[{
             type: ImageSchema,
             required: [true, "Require product image."]
-        },
+        }],
 
         category:{
             type: mongoose.Types.ObjectId,
