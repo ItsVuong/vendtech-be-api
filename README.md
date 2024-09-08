@@ -17,6 +17,10 @@
             - pageSize: number (Get all category if pageSize = 0)
             - currentPage: number
 
+    - Get category by id
+        - Method: GET
+        - /api/category/:id
+
     - Delete category
         - Path: /api/category/:id
         - Method: DELETE
@@ -51,13 +55,13 @@
         - Path: /api/product
         - Method: POST
         - headers: { content-type: multipart/form-data, authorization: ACCESS_TOKEN }
-        - body: { fileName: file, name: string, description: string, category: string (optional) }
+        - body: { fileName: files (multiple), name: string, description: string, category: string (optional) }
 
     - Update product
         - Path: /api/product/:id
         - Method: POST
         - headers: { content-type: multipart/form-data, authorization: ACCESS_TOKEN }
-        - body: { fileName: file, name: string, description: string, category: string }
+        - body: { fileName: files (multiple), deletedImages: string (image ids), name: string, description: string, category: string }
 
 ### Food and drink category
     - Get
