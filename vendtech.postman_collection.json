@@ -30,7 +30,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3001/api/category/66d72c7f14ba8f1ad25d6c4d",
+							"raw": "localhost:3001/api/category/66ddffddc32d2c9ece2f0a6b",
 							"host": [
 								"localhost"
 							],
@@ -38,7 +38,7 @@
 							"path": [
 								"api",
 								"category",
-								"66d72c7f14ba8f1ad25d6c4d"
+								"66ddffddc32d2c9ece2f0a6b"
 							]
 						}
 					},
@@ -133,11 +133,12 @@
 								{
 									"key": "name",
 									"value": "Category 2",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "description",
-									"value": "This is category 2",
+									"value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis lorem nulla. Sed nec lacinia mi. Phasellus eleifend, nisi id tempus euismod, nisl mi tristique magna, eget egestas sapien massa ut erat. Quisque sodales sollicitudin consequat. Vestibulum suscipit ante ut turpis tristique volutpat. In vulputate sem ut magna maximus, id tristique arcu placerat. Donec ornare varius ipsum, nec condimentum ligula pharetra quis. Aliquam mauris lectus, iaculis eu laoreet ut, rutrum at risus. Nulla facilisi. Pellentesque facilisis at nisi eu laoreet. Phasellus accumsan quam eu libero fringilla sagittis. Nunc sed fermentum ipsum, nec consectetur ipsum. Donec id elit massa. Curabitur et purus dictum ligula maximus imperdiet",
 									"type": "text"
 								},
 								{
@@ -149,7 +150,7 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:3001/api/category/66ddffc6c32d2c9ece2f0a68",
+							"raw": "localhost:3001/api/category/66e1d14525d38295712c9485",
 							"host": [
 								"localhost"
 							],
@@ -157,7 +158,7 @@
 							"path": [
 								"api",
 								"category",
-								"66ddffc6c32d2c9ece2f0a68"
+								"66e1d14525d38295712c9485"
 							]
 						}
 					},
@@ -190,7 +191,7 @@
 								{
 									"key": "fileName",
 									"type": "file",
-									"src": "/C:/Users/Asus/Downloads/OIP (1).jpg"
+									"src": "/C:/Users/Asus/Downloads/OIP.jpg"
 								}
 							]
 						},
@@ -495,7 +496,7 @@
 									"type": "file",
 									"src": [
 										"/C:/Users/Asus/Downloads/cold-drink-vending-machine-1589011132-5420095.jpeg",
-										"/C:/Users/Asus/Downloads/OIP.jpg"
+										"/C:/Users/Asus/Downloads/OIP (1).jpg"
 									]
 								},
 								{
@@ -510,8 +511,13 @@
 								},
 								{
 									"key": "category",
-									"value": "66ddffc6c32d2c9ece2f0a68",
+									"value": "66e1d14525d38295712c9485",
 									"type": "text"
+								},
+								{
+									"key": "mainImage",
+									"type": "file",
+									"src": "/C:/Users/Asus/Downloads/OIP.jpg"
 								}
 							]
 						},
@@ -553,17 +559,17 @@
 								{
 									"key": "fileName",
 									"type": "file",
-									"src": "/C:/Users/Asus/Downloads/image-asset.jpeg"
-								},
-								{
-									"key": "name",
-									"value": "Vending machine 1",
-									"type": "text",
+									"src": "/C:/Users/Asus/Downloads/OIP (1).jpg",
 									"disabled": true
 								},
 								{
+									"key": "name",
+									"value": "Vending machine 1.0",
+									"type": "text"
+								},
+								{
 									"key": "description",
-									"value": "it's a vending machine 12345",
+									"value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis lorem nulla. Sed nec lacinia mi. Phasellus eleifend, nisi id tempus euismod, nisl mi tristique magna, eget egestas sapien massa ut erat. Quisque sodales sollicitudin consequat. Vestibulum suscipit ante ut turpis tristique volutpat. In vulputate sem ut magna maximus, id tristique arcu placerat. Donec ornare varius ipsum, nec condimentum ligula pharetra quis. Aliquam mauris lectus, iaculis eu laoreet ut, rutrum at risus. Nulla facilisi. Pellentesque facilisis at nisi eu laoreet. Phasellus accumsan quam eu libero fringilla sagittis. Nunc sed fermentum ipsum, nec consectetur ipsum. Donec id elit massa. Curabitur et purus dictum ligula maximus imperdiet",
 									"type": "text",
 									"disabled": true
 								},
@@ -575,14 +581,18 @@
 								},
 								{
 									"key": "deletedImages",
-									"value": "66ddee59012c2f56b82c312b",
-									"type": "text",
-									"disabled": true
+									"value": "66e1d23925d38295712c94a9",
+									"type": "text"
+								},
+								{
+									"key": "mainImage",
+									"type": "file",
+									"src": "/C:/Users/Asus/Downloads/OIP (1).jpg"
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:3001/api/product/66de004ec32d2c9ece2f0a7b",
+							"raw": "localhost:3001/api/product/66e1d23925d38295712c94a6",
 							"host": [
 								"localhost"
 							],
@@ -590,7 +600,7 @@
 							"path": [
 								"api",
 								"product",
-								"66de004ec32d2c9ece2f0a7b"
+								"66e1d23925d38295712c94a6"
 							],
 							"query": [
 								{
@@ -615,7 +625,7 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:3001/api/product/66d2dd70d50be7a49f2f2b69",
+							"raw": "localhost:3001/api/product/66e1ce3210c84b0e77630be7",
 							"host": [
 								"localhost"
 							],
@@ -623,7 +633,7 @@
 							"path": [
 								"api",
 								"product",
-								"66d2dd70d50be7a49f2f2b69"
+								"66e1ce3210c84b0e77630be7"
 							],
 							"query": [
 								{

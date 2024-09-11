@@ -8,11 +8,16 @@ const ProductSchema = mongoose.Schema(
             required: [true, "Require product name."]
         },
 
-        image:[{
+        mainImage:{
+            type: ImageSchema,
+            required: [true, "Require product's main image."]
+        },
+
+        images:[{
             type: ImageSchema,
             required: [true, "Require product image."]
         }],
-
+        
         category:{
             type: mongoose.Types.ObjectId,
             ref: "Category" 

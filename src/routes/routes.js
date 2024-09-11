@@ -28,7 +28,10 @@ const upload = multer({
 });
 
 const api = router
-  .use('/product', upload.array('fileName', 20), product)
+  .use('/product', upload.fields([
+    {name: 'fileName', maxCount: 20},
+    {name: 'mainImage', maxCount: 1}
+  ]), product)
   .use('/food-drink', upload.array('fileName', 20), foodAndDrink)
   .use('/category', upload.single('fileName'), category)
   .use('/food-drink-category', upload.single('fileName'), foodAndDrinkCategory)

@@ -55,13 +55,13 @@
         - Path: /api/product
         - Method: POST
         - headers: { content-type: multipart/form-data, authorization: ACCESS_TOKEN }
-        - body: { fileName: files (multiple), name: string, description: string, category: string (optional) }
+        - body: { fileName: files (multiple), mainImage: file (single), name: string, description: string, category: string (optional) }
 
     - Update product
         - Path: /api/product/:id
         - Method: POST
         - headers: { content-type: multipart/form-data, authorization: ACCESS_TOKEN }
-        - body: { fileName: files (multiple), deletedImages: string (image ids), name: string, description: string, category: string }
+        - body: { fileName: files (multiple), mainImage: file (single), deletedImages: string (image ids), name: string, description: string, category: string }
 
 ### Food and drink category
     - Get

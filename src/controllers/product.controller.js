@@ -14,9 +14,13 @@ async function createProductController(req, res, next) {
     try {
         //validate
         const error = await validateProduct(req.body);
-        const uploadedFile = req.files;
+        const uploadedFile = req.files['fileName'];
         if (!uploadedFile || uploadedFile?.length == 0) {
-            error.image = "Product image is required."
+            error.images = "Product image is required."
+        }
+        const mainImageFile = req.files['mainImage'];
+        if(!mainImageFile || mainImageFile?.length == 0){
+            error.mainImage = "Main image is required."
         }
         if (Object.keys(error).length) {
             throw new HttpException(400, 'Bad request.', error);
@@ -28,11 +32,14 @@ async function createProductController(req, res, next) {
             const image = await uploadService.uploadImage(file);
             images.push(image);
         }
+        //upload main image
+        const mainImage = await uploadService.uploadImage(mainImageFile[0]);
 
         //create product object 
         const product = {
             name: req.body.name?.trim(),
-            image: images,
+            images: images,
+            mainImage: mainImage,
             description: req.body.description,
             category: req.body.category?.trim()
         }
@@ -106,7 +113,7 @@ async function updateProductById(req, res, next) {
         const productObject = {...await validateProductUpdate(req.body)};
         
         const product = await productService.getProductById(req.params.id);
-        const images = [...product.image];
+        const images = [...product.images];
         //remove images
         if(productObject.deletedImages){
             images.map(image => {
@@ -115,17 +122,24 @@ async function updateProductById(req, res, next) {
                     uploadService.deleteImage(image.name);
                 }
             });
-            productObject.image = images;      
+            productObject.images = images;      
         }
         //upload images
-        const uploadedFiles = req.files;
+        const uploadedFiles = req.files['fileName'];
         if (uploadedFiles && uploadedFiles.length > 0) {
             //const images = await uploadService.uploadImage(uploadedFiles);
             for(const file of uploadedFiles){
                 const image = await uploadService.uploadImage(file);
                 images.push(image);
             }
-            productObject.image = images;
+            productObject.images = images;
+        }
+        //upload main image
+        const mainImageFile = req.files['mainImage'];
+        if(mainImageFile){
+            const mainImage = await uploadService.uploadImage(mainImageFile[0]);
+            productObject.mainImage = mainImage;
+            uploadService.deleteImage(product.mainImage.name)
         }
         //check if product is empty
         if (!productObject) {

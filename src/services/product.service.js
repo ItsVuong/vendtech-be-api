@@ -4,7 +4,8 @@ const uploadService = require('../services/image-upload.service');
 async function createProduct (data){
     const product = new Product({
             name: data.name,
-            image: data.image,
+            mainImage: data.mainImage,
+            images: data.images,
             description: data.description,
             category: data?.category
         });
@@ -14,9 +15,10 @@ async function createProduct (data){
 async function deleteProduct(id){
     const result = await Product.findByIdAndDelete(id);
     if(result){
-        result.image.forEach(img => {
+        result.images.forEach(img => {
             uploadService.deleteImage(img.name);
-        })
+        });
+        uploadService.deleteImage(result.mainImage?.name)
     }
     return result;
 }
@@ -24,9 +26,10 @@ async function deleteProduct(id){
 async function deleteProductByCategory(categoryId){
     const products = await getProducts(0,0,categoryId);
     products.data.forEach(element => {
-        element.image.forEach(img => {
+        element.images.forEach(img => {
             uploadService.deleteImage(img.name);
-        })
+        });
+        uploadService.deleteImage(element.mainImage?.name)
     });
     return Product.deleteMany({category: categoryId});
 }
