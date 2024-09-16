@@ -4,7 +4,7 @@ const categoryService = require("../services/food-drink-category.service");
 const { HttpException } = require("../exceptions/exception");
 const uploadService = require('../services/image-upload.service');
 const foodAndDrinkService = require('../services/food-drink.service');
-const { validateCategoryUpdate, validateFoodAndDrinkCategoryUpdate } = require("../utils/request-validator");
+const { validateCategoryUpdate, validateFoodAndDrinkCategoryUpdate, validateId } = require("../utils/request-validator");
 
 async function createCategory(req, res, next){
     console.log(req.body)
@@ -52,6 +52,23 @@ async function getCategories(req, res, next){
 
         const result = await categoryService.getCategories(req.query.pageSize, req.query.currentPage);
         return res.status(200).send(result)
+    } catch (error) {
+       console.log(error);
+       next(error); 
+    }
+}
+
+async function getCategoryById(req, res, next){
+    try {
+        const id = req.params.id;
+        validateId(id);
+        const result = await categoryService.getCategoryById(id);
+
+        if(!result){
+            throw new HttpException(400, "Bad request.", {id: "Category not found."});
+        } else {
+            return res.status(200).send(result);
+        }
     } catch (error) {
        console.log(error);
        next(error); 
@@ -126,5 +143,6 @@ module.exports = {
     createCategory,
     getCategories,
     updateCategory, 
-    deleteCategory
+    deleteCategory,
+    getCategoryById
 }
