@@ -1,147 +1,122 @@
-const { default: mongoose } = require("mongoose");
-const categoryService = require("../services/category.service");
+const fs = require("fs");
+const mongoose = require("mongoose");
 const { HttpException } = require("../exceptions/exception");
-const uploadService = require('../services/image-upload.service');
-const productService = require('../services/product.service');
 const { validateCategoryUpdate, validateId } = require("../utils/request-validator");
+const productService = require("../services/product.service");
+const categoryService = require("../services/category.service");
+const { uploadFile, deleteFile } = require("../utils/cloudinary.util");
 
-async function createCategory(req, res, next){
-    console.log(req.body)
-    try {
-        const error = {};
-        const uploadedFile = req.file;
-        if(!req.body.name?.trim()){
-            error.name= "Category name is missing.";
-        }
-        if (!req.body.description?.trim()){
-            error.description = "Category description is missing.";
-        }
-        if(!uploadedFile){
-            error.image = "Image is missing."
-        }
-
-        if(Object.keys(error).length){
-            throw new HttpException(400, "Bad request.", error);
-        }
-
-        //upload image
-        const image = await uploadService.uploadImage(uploadedFile);
-
-        categoryService.createCategory({name: req.body.name, description: req.body.description, image: image})
-            .then(result => res.status(201).send(result))
-            .catch(error => {
-                console.log(error);
-                if(image){
-                    uploadService.deleteImage(image.name)
-                    .catch(error => console.log(error));
-                }
-            })
-    } catch (error) {
-        console.log(error)
-        next(error)
-    }
+// Helper: upload single file, return { name, url }
+async function handleUpload(file) {
+  const { public_id: name, url } = await uploadFile(file.path, "categories");
+  fs.unlink(file.path, () => {});
+  return { name, url };
 }
 
-async function getCategories(req, res, next){
-    try {
-        const regex = /^\d+$/
-        if(!req.query.pageSize || !regex.test(req.query.pageSize)){
-            throw new HttpException(400, "Invalid page size.")
-        }
+async function createCategory(req, res, next) {
+  try {
+    const errors = {};
+    const { name, description } = req.body;
+    const file = req.file;
 
-        const result = await categoryService.getCategories(req.query.pageSize, req.query.currentPage);
-        return res.status(200).send(result)
-    } catch (error) {
-       console.log(error);
-       next(error); 
-    }
+    if (!name?.trim()) errors.name = "Category name is missing.";
+    if (!description?.trim()) errors.description = "Category description is missing.";
+    if (!file) errors.image = "Image is required.";
+    if (Object.keys(errors).length) throw new HttpException(400, "Bad request.", errors);
+
+    const image = await handleUpload(file);
+    const categoryData = { name: name.trim(), description: description.trim(), image };
+    const result = await categoryService.createCategory(categoryData);
+    res.status(201).json(result);
+  } catch (err) {
+    console.error(err);
+    // cleanup uploaded image on error
+    if (err.image) deleteFile(err.image.name).catch(() => {});
+    next(err);
+  }
 }
 
-async function getCategoryById(req, res, next){
-    try {
-        const id = req.params.id;
-        validateId(id);
-        const result = await categoryService.getCategoryById(id);
-
-        if(!result){
-            throw new HttpException(400, "Bad request.", {id: "Category not found."});
-        } else {
-            return res.status(200).send(result);
-        }
-    } catch (error) {
-       console.log(error);
-       next(error); 
+async function getCategories(req, res, next) {
+  try {
+    const { pageSize, currentPage } = req.query;
+    if (!pageSize || !/^\d+$/.test(pageSize)) {
+      throw new HttpException(400, "Invalid page size.");
     }
+    const result = await categoryService.getCategories(Number(pageSize), Number(currentPage));
+    res.status(200).json(result);
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+}
+
+async function getCategoryById(req, res, next) {
+  try {
+    const { id } = req.params;
+    validateId(id);
+    const result = await categoryService.getCategoryById(id);
+    if (!result) {
+      throw new HttpException(404, "Category not found.");
+    }
+    res.status(200).json(result);
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
 }
 
 async function updateCategory(req, res, next) {
-    try {
-        const uploadedFile = req.file;
-        const id = req.params.id;
-        const category = { id, ...req.body }
-        
-        const error = await validateCategoryUpdate(category, uploadedFile?.mimetype);
-        if (Object.keys(error).length) {
-            throw new HttpException(400, "Bad request.", error);
-        }
+  try {
+    const { id } = req.params;
+    validateId(id);
+    const existing = await categoryService.getCategoryById(id);
+    if (!existing) throw new HttpException(404, "Category not found.");
 
-        //upload image
-        if (uploadedFile) {
-            const image = await uploadService.uploadImage(uploadedFile);
-            if(image){
-                category.image = image;
-                const oldProduct = await categoryService.getCategoryById(id);
-                uploadService.deleteImage(oldProduct.image?.name);
-            }
-        }
+    const file = req.file;
+    const updates = { id, ...req.body };
+    const errors = await validateCategoryUpdate(updates, file?.mimetype);
+    if (Object.keys(errors).length) throw new HttpException(400, "Bad request.", errors);
 
-        categoryService.updateCategory(id, category)
-            .then(result => {
-                res.status(201).send(result)
-            })
-            .catch(error => {
-                console.log(error)
-                if (image) {
-                    uploadService.deleteImage(image.name)
-                        .catch(error => console.log(error));
-                }
-                next(error);
-            });
-    } catch (error) {
-        console.log(error);
-        next(error);
+    // Handle new image
+    if (file) {
+      const newImage = await handleUpload(file);
+      updates.image = newImage;
+      // delete old image
+      deleteFile(existing.image.name).catch(() => {});
     }
+
+    const result = await categoryService.updateCategory(id, updates);
+    res.status(200).json(result);
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
 }
 
-async function deleteCategory(req, res, next){
-    try {
-        const categoryId = req.params.id;
-        const error = new Error()
-        if(!mongoose.isValidObjectId(categoryId)){
-            error.status = 400;
-            error.message = "invalid object id."
-            throw error
-        }
-        const result = await categoryService.deleteCategory(categoryId);
-        if(!result){
-            return res.status(400).json({"message": "Category id not found"})
-        } 
-        
-        //delete category image
-        uploadService.deleteImage(result?.image.name);
-        //delete all products by category
-        productService.deleteProductByCategory(categoryId);
-        return res.status(201).send(result);
-    } catch (error) {
-        console.log(error);
-        next(error);
+async function deleteCategory(req, res, next) {
+  try {
+    const { id } = req.params;
+    validateId(id);
+    const result = await categoryService.deleteCategory(id);
+    if (!result) {
+      throw new HttpException(404, "Category not found.");
     }
+    // cleanup image
+    deleteFile(result.image.name).catch(() => {});
+    // delete related products
+    productService.deleteProductByCategory(id).catch(() => {});
+
+    res.status(200).json({ message: "Category deleted.", data: result });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
 }
 
 module.exports = {
-    createCategory,
-    getCategories,
-    updateCategory, 
-    deleteCategory,
-    getCategoryById
-}
+  createCategory,
+  getCategories,
+  getCategoryById,
+  updateCategory,
+  deleteCategory,
+};

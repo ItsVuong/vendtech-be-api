@@ -1,74 +1,106 @@
-const Product = require('../models/product.model')
-const uploadService = require('../services/image-upload.service');
+const Product = require('../models/product.model');
+const { deleteFile } = require('../utils/cloudinary.util');
 
-async function createProduct (data){
+/**
+ * Create a new product document, saving images are already uploaded
+ * @param {Object} data - product data with images and mainImage
+ */
+async function createProduct(data) {
+  try {
     const product = new Product({
-            name: data.name,
-            mainImage: data.mainImage,
-            images: data.images,
-            description: data.description,
-            category: data?.category
-        });
-        return await product.save().then(result => result.populate('category'))
-}
-
-async function deleteProduct(id){
-    const result = await Product.findByIdAndDelete(id);
-    if(result){
-        result.images.forEach(img => {
-            uploadService.deleteImage(img.name);
-        });
-        uploadService.deleteImage(result.mainImage?.name)
-    }
-    return result;
-}
-
-async function deleteProductByCategory(categoryId){
-    const products = await getProducts(0,0,categoryId);
-    products.data.forEach(element => {
-        element.images.forEach(img => {
-            uploadService.deleteImage(img.name);
-        });
-        uploadService.deleteImage(element.mainImage?.name)
+      name: data.name,
+      description: data.description,
+      category: data.category,
+      images: data.images,
+      mainImage: data.mainImage,
     });
-    return Product.deleteMany({category: categoryId});
-}
 
-async function getProducts(pageSize, currentPage, category){
-    const query = {};
-    if(category){
-        query.category = category;
+    const saved = await product.save();
+    return saved.populate('category');
+  } catch (err) {
+    // cleanup uploaded images on failure
+    if (data.images?.length) {
+      data.images.forEach(img => deleteFile(img.name).catch(() => { }));
     }
-
-    const count = await Product.countDocuments({...query});
-    const divide = Number(count/pageSize);
-    const pages = Math.ceil(divide);
-
-    if(currentPage >= pages){currentPage = pages}
-    if(currentPage <= 0){currentPage = 1}
-    const products = await Product.find({...query}, null, 
-        { limit: pageSize, skip: (currentPage - 1) * pageSize })
-        .populate('category');
-
-    return {
-        data: products,
-        total: count
-    };
+    if (data.mainImage?.name) {
+      deleteFile(data.mainImage.name).catch(() => { });
+    }
+    throw err;
+  }
 }
 
-async function getProductById(id){
-    return Product.findById(id);
+/**
+ * Delete product by id and remove its images from Cloudinary
+ * @param {String} id
+ */
+async function deleteProduct(id) {
+  const product = await Product.findByIdAndDelete(id);
+  if (product) {
+    const toDelete = [
+      ...product.images.map(img => img.name),
+      product.mainImage?.name,
+    ];
+    toDelete.forEach(publicId => {
+      if (publicId) deleteFile(publicId).catch(() => { });
+    });
+  }
+  return product;
 }
 
-async function updateProductById(id, updateData){
-    return Product.findByIdAndUpdate(id, updateData, { returnDocument: "after" });
+/**
+ * Delete all products in a category, cleaning up images
+ */
+async function deleteProductByCategory(categoryId) {
+  const products = await Product.find({ category: categoryId });
+  // delete cloudinary files
+  products.forEach(prod => {
+    prod.images.forEach(img => deleteFile(img.name).catch(() => { }));
+    if (prod.mainImage?.name) deleteFile(prod.mainImage.name).catch(() => { });
+  });
+  return Product.deleteMany({ category: categoryId });
+}
+
+/**
+ * Fetch paginated products with optional category filter
+ */
+async function getProducts(pageSize = 10, currentPage = 1, category) {
+  const filter = {};
+  if (category) filter.category = category;
+
+  const total = await Product.countDocuments(filter);
+  const pages = Math.max(Math.ceil(total / pageSize), 1);
+  const page = Math.min(Math.max(currentPage, 1), pages);
+
+  const data = await Product.find(filter)
+    .skip((page - 1) * pageSize)
+    .limit(pageSize)
+    .populate('category');
+
+  return { data, total };
+}
+
+/**
+ * Get single product by id
+ */
+async function getProductById(id) {
+  return Product.findById(id).populate('category');
+}
+
+/**
+ * Update a product and return the updated document
+ */
+async function updateProductById(id, updateData) {
+  return Product.findByIdAndUpdate(id, updateData, {
+    new: true,
+    runValidators: true,
+  }).populate('category');
 }
 
 module.exports = {
-    createProduct,
-    deleteProduct,
-    deleteProductByCategory,
-    getProducts,
-    getProductById,
-    updateProductById
-}
+  createProduct,
+  deleteProduct,
+  deleteProductByCategory,
+  getProducts,
+  getProductById,
+  updateProductById,
+};
