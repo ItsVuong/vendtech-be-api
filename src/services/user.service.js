@@ -102,7 +102,9 @@ async function generatePasswordToken(userId) {
 }   
 
 async function resetPassword(userId, password, token){
+    console.log(userId,password,token)
     const resetToken = await PasswordResetToken.findOne({userId: userId})
+  console.log(resetToken)
     if(!resetToken){
         throw new HttpException(400, "Token is invalid or expired.");
     }

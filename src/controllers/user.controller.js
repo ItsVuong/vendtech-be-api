@@ -86,7 +86,7 @@ async function getPasswordResetToken(req, res, next) {
         <html>
         <body>
             <h4>Click here to reset your password: </h4>
-            <a href="http://${encodeURIComponent(redirectUrl)}"> RESET PASSWORD </a>
+            <a href="http://${redirectUrl}"> RESET PASSWORD </a>
         </body>    
         </html>`
         )

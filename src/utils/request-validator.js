@@ -10,6 +10,7 @@ function isEmail(email) {
 }
 
 function validateGuestInfo(guestInfo){
+    const error = {}
     if(!guestInfo.firstName){
         error.firstName = "First name is invalid";
     }

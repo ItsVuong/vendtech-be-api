@@ -1,15 +1,10 @@
 const fs = require("fs");
-const { initializeApp } = require('firebase/app');
-const config = require('../configs/firebase.config');
 const mongoose = require('mongoose');
 const { HttpException } = require('../exceptions/exception');
 const { validateCreateFoodAndDrink, validateGetFoodAndDrink } = require('../utils/request-validator');
 const foodAndDrinkService = require('../services/food-drink.service');
 const categoryService = require('../services/food-drink-category.service');
 const { uploadFile, deleteFile } = require('../utils/cloudinary.util');
-
-// Initialize Firebase app
-initializeApp(config.firebaseConfig);
 
 // Helper: upload image and cleanup
 async function handleUpload(file) {
